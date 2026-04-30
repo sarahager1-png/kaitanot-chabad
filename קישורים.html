@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>פרויקטי שרה</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Heebo',sans-serif;background:#f8f7ff;color:#1e1b4b;min-height:100vh;padding:40px 20px}
+    h1{font-size:30px;font-weight:900;text-align:center;margin-bottom:6px;color:#4c1d95}
+    .sub{text-align:center;color:#7c3aed;font-size:13px;margin-bottom:44px}
+    .section{font-size:11px;font-weight:800;color:#a78bfa;text-transform:uppercase;letter-spacing:1.5px;margin:36px auto 14px;max-width:960px;padding:0 4px;border-bottom:1px solid #ede9fe;padding-bottom:8px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;max-width:960px;margin:0 auto}
+    a.card{display:block;text-decoration:none;background:#fff;border-radius:16px;border:2px solid #ede9fe;box-shadow:0 2px 10px rgba(124,58,237,.07);padding:18px 20px;transition:box-shadow .2s,transform .15s,border-color .2s}
+    a.card:hover{box-shadow:0 8px 28px rgba(124,58,237,.18);transform:translateY(-3px);border-color:#a78bfa}
+    div.card{background:#fff;border-radius:16px;border:2px solid #e5e7eb;padding:18px 20px;opacity:.65}
+    .card-top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .emoji{font-size:26px;width:46px;height:46px;display:flex;align-items:center;justify-content:center;border-radius:12px;flex-shrink:0}
+    .name{font-size:16px;font-weight:800;color:#1e1b4b}
+    .desc{font-size:12px;color:#7c3aed;margin-top:2px}
+    .url{font-size:11px;color:#9ca3af;direction:ltr;text-align:left;margin-top:6px;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .badges{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+    .badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:10px;font-weight:700}
+    .live{background:#d1fae5;color:#065f46}
+    .local{background:#ede9fe;color:#6d28d9}
+    .tool{background:#fef3c7;color:#92400e}
+    .static{background:#e0f2fe;color:#0369a1}
+    .arrow{font-size:16px;margin-right:auto;color:#c4b5fd;flex-shrink:0;transition:color .15s}
+    a.card:hover .arrow{color:#7c3aed}
+  </style>
+</head>
+<body>
+
+<h1>🗂️ פרויקטי שרה</h1>
+<p class="sub">לחצי על כרטיס לפתיחת הפרויקט</p>
+
+<!-- ═══ אתרים חיים ═══ -->
+<div class="section">🌐 אתרים חיים</div>
+<div class="grid">
+
+  <a class="card" href="https://chabad-kaitanot-d2em.vercel.app" target="_blank" style="border-color:#c4b5fd">
+    <div class="card-top">
+      <div class="emoji" style="background:#f0e9ff">🏕️</div>
+      <div style="flex:1">
+        <div class="name">קייטנות רשת</div>
+        <div class="desc">ניהול קייטנות · רשת שלוחי חב"ד</div>
+      </div>
+      <span class="arrow" style="color:#a78bfa">↗</span>
+    </div>
+    <div class="url">chabad-kaitanot-d2em.vercel.app</div>
+    <div class="badges"><span class="badge live">🌐 חי</span><span class="badge local">Next.js · Supabase</span></div>
+  </a>
+
+  <a class="card" href="#kaitanot-setup" onclick="document.getElementById('kaitanot-setup').scrollIntoView({behavior:'smooth'});return false;" style="border-color:#ddd6fe;opacity:.85">
+    <div class="card-top">
+      <div class="emoji" style="background:#f0e9ff">📋</div>
+      <div style="flex:1">
+        <div class="name">קייטנות — מה נשאר לעשות</div>
+        <div class="desc">WhatsApp · Cardcom · הגדרות</div>
+      </div>
+      <span class="arrow" style="color:#a78bfa">↓</span>
+    </div>
+    <div class="badges"><span class="badge static">↓ גלול למטה</span></div>
+  </a>
+
+  <a class="card" href="https://nitzozot-chabad.surge.sh" target="_blank" style="border-color:#ddd6fe">
+    <div class="card-top">
+      <div class="emoji" style="background:#f5f3ff">✨</div>
+      <div style="flex:1">
+        <div class="name">ניצוצות</div>
+        <div class="desc">בונה קורסים ומפגשים · רשת חב"ד</div>
+      </div>
+      <span class="arrow">↗</span>
+    </div>
+    <div class="url">nitzozot-chabad.surge.sh</div>
+    <div class="badges"><span class="badge live">🌐 חי</span><span class="badge local">פורט 5173</span></div>
+  </a>
+
+  <a class="card" href="https://smart-base-chabad.surge.sh" target="_blank" style="border-color:#bbf7d0">
+    <div class="card-top">
+      <div class="emoji" style="background:#f0fdf4">🏫</div>
+      <div style="flex:1">
+        <div class="name">Smart Base</div>
+        <div class="desc">ניהול בית ספר · base44</div>
+      </div>
+      <span class="arrow" style="color:#86efac">↗</span>
+    </div>
+    <div class="url">smart-base-chabad.surge.sh</div>
+    <div class="badges"><span class="badge live">🌐 חי</span><span class="badge local">פורט 5175</span></div>
+  </a>
+
+  <a class="card" href="https://school-climate-chabad.surge.sh" target="_blank" style="border-color:#fed7aa">
+    <div class="card-top">
+      <div class="emoji" style="background:#fff7ed">🔥</div>
+      <div style="flex:1">
+        <div class="name">שלהבות</div>
+        <div class="desc">מד אקלים בית ספרי · רשת חב"ד</div>
+      </div>
+      <span class="arrow" style="color:#fdba74">↗</span>
+    </div>
+    <div class="url">school-climate-chabad.surge.sh</div>
+    <div class="badges"><span class="badge live">🌐 חי</span><span class="badge local">פורט 5174</span></div>
+  </a>
+
+  <a class="card" href="https://copy-f9ea9498.base44.app" target="_blank" style="border-color:#bae6fd">
+    <div class="card-top">
+      <div class="emoji" style="background:#e0f2fe">📋</div>
+      <div style="flex:1">
+        <div class="name">מיטוב-קבלה</div>
+        <div class="desc">מערכת ניהול קבלה · base44</div>
+      </div>
+      <span class="arrow" style="color:#7dd3fc">↗</span>
+    </div>
+    <div class="url">copy-f9ea9498.base44.app</div>
+    <div class="badges"><span class="badge live">🌐 חי</span><span class="badge local">פורט 5176</span></div>
+  </a>
+
+  <a class="card" href="https://beis-chaya-kabala.surge.sh" target="_blank" style="border-color:#bae6fd">
+    <div class="card-top">
+      <div class="emoji" style="background:#e0f2fe">🏠</div>
+      <div style="flex:1">
+        <div class="name">בית חיה מושקא</div>
+        <div class="desc">דף נחיתה להורים · קבלה לגן</div>
+      </div>
+      <span class="arrow" style="color:#7dd3fc">↗</span>
+    </div>
+    <div class="url">beis-chaya-kabala.surge.sh</div>
+    <div class="badges"><span class="badge live">🌐 חי</span></div>
+  </a>
+
+</div>
+
+<!-- ═══ פרויקטים מקומיים ═══ -->
+<div class="section">💻 פרויקטים מקומיים (Vite)</div>
+<div class="grid">
+
+  <a class="card" href="http://localhost:5173" target="_blank">
+    <div class="card-top">
+      <div class="emoji" style="background:#f5f3ff">✨</div>
+      <div style="flex:1">
+        <div class="name">ניצוצות</div>
+        <div class="desc">בונה קורסים ומפגשים</div>
+      </div>
+      <span class="arrow">↗</span>
+    </div>
+    <div class="url">localhost:5173</div>
+    <div class="badges"><span class="badge local">💻 מקומי</span></div>
+  </a>
+
+  <a class="card" href="http://localhost:5174" target="_blank">
+    <div class="card-top">
+      <div class="emoji" style="background:#fff7ed">🔥</div>
+      <div style="flex:1">
+        <div class="name">שלהבות</div>
+        <div class="desc">מד אקלים בית ספרי</div>
+      </div>
+      <span class="arrow">↗</span>
+    </div>
+    <div class="url">localhost:5174</div>
+    <div class="badges"><span class="badge local">💻 מקומי</span></div>
+  </a>
+
+  <a class="card" href="http://localhost:5175" target="_blank">
+    <div class="card-top">
+      <div class="emoji" style="background:#f0fdf4">🏫</div>
+      <div style="flex:1">
+        <div class="name">Smart Base</div>
+        <div class="desc">ניהול בית ספר · base44</div>
+      </div>
+      <span class="arrow">↗</span>
+    </div>
+    <div class="url">localhost:5175</div>
+    <div class="badges"><span class="badge local">💻 מקומי</span></div>
+  </a>
+
+  <a class="card" href="http://localhost:5176" target="_blank">
+    <div class="card-top">
+      <div class="emoji" style="background:#e0f2fe">📋</div>
+      <div style="flex:1">
+        <div class="name">מיטוב-קבלה</div>
+        <div class="desc">מערכת ניהול קבלה · base44</div>
+      </div>
+      <span class="arrow">↗</span>
+    </div>
+    <div class="url">localhost:5176</div>
+    <div class="badges"><span class="badge local">💻 מקומי</span></div>
+  </a>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="emoji" style="background:#fef9c3">🌱</div>
+      <div style="flex:1">
+        <div class="name">גנים חב"ד</div>
+        <div class="desc">דאשבורד גן · Gan Dashboard</div>
+      </div>
+    </div>
+    <div class="url">npm run dev (פורט אוטומטי)</div>
+    <div class="badges"><span class="badge tool">▶️ הפעל ידנית</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="emoji" style="background:#fce7f3">🤖</div>
+      <div style="flex:1">
+        <div class="name">מרכז זכויות המורה</div>
+        <div class="desc">Morim Bot · זכויות עובדים</div>
+      </div>
+    </div>
+    <div class="url">npm run dev (פורט אוטומטי)</div>
+    <div class="badges"><span class="badge tool">▶️ הפעל ידנית</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="emoji" style="background:#fef3c7">💰</div>
+      <div style="flex:1">
+        <div class="name">מערכת שכר מורים</div>
+        <div class="desc">Salary Schools</div>
+      </div>
+    </div>
+    <div class="url">npm run dev (פורט אוטומטי)</div>
+    <div class="badges"><span class="badge tool">▶️ הפעל ידנית</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="emoji" style="background:#ecfdf5">✨</div>
+      <div style="flex:1">
+        <div class="name">GLOW Clinic</div>
+        <div class="desc">קליניקת גלאו</div>
+      </div>
+    </div>
+    <div class="url">npm run dev (פורט אוטומטי)</div>
+    <div class="badges"><span class="badge tool">▶️ הפעל ידנית</span></div>
+  </div>
+
+</div>
+
+<!-- ═══ קבצים סטטיים ═══ -->
+<div class="section">📄 קבצים סטטיים</div>
+<div class="grid">
+
+  <a class="card" href="../mishov-herum/index.html" target="_blank" style="border-color:#bae6fd">
+    <div class="card-top">
+      <div class="emoji" style="background:#e0f2fe">🆘</div>
+      <div style="flex:1">
+        <div class="name">משוב תקופת חירום</div>
+        <div class="desc">מעני הרשת · שאלון חירום</div>
+      </div>
+      <span class="arrow" style="color:#7dd3fc">↗</span>
+    </div>
+    <div class="url">mishov-herum/index.html</div>
+    <div class="badges"><span class="badge static">📄 HTML סטטי</span></div>
+  </a>
+
+</div>
+
+<!-- ═══ כלים ═══ -->
+<div class="section">🛠️ כלים ותבניות</div>
+<div class="grid">
+
+  <a class="card" href="https://mematmel.vercel.app" target="_blank" style="border-color:#ddd6fe">
+    <div class="card-top">
+      <div class="emoji" style="background:#f5f3ff">🎙️</div>
+      <div style="flex:1">
+        <div class="name">מתמלל</div>
+        <div class="desc">תמלול וסיכום שיחות מנהל · PWA</div>
+      </div>
+      <span class="arrow">↗</span>
+    </div>
+    <div class="url">mematmel.vercel.app</div>
+    <div class="badges"><span class="badge live">🌐 חי</span><span class="badge tool">Next.js · PWA</span></div>
+  </a>
+
+  <a class="card" href="http://localhost:3000" target="_blank" style="border-color:#e9d5ff">
+    <div class="card-top">
+      <div class="emoji" style="background:#faf5ff">🎮</div>
+      <div style="flex:1">
+        <div class="name">Game Changer</div>
+        <div class="desc">Next.js AI template · Supabase · Vercel</div>
+      </div>
+      <span class="arrow">↗</span>
+    </div>
+    <div class="url">localhost:3000</div>
+    <div class="badges"><span class="badge local">💻 מקומי</span><span class="badge tool">Next.js</span></div>
+  </a>
+
+</div>
+
+
+<!-- ═══ קייטנות רשת — הגדרות ═══ -->
+<div id="kaitanot-setup" class="section" style="margin-top:52px">🏕️ קייטנות רשת — מה נשאר לעשות</div>
+
+<div style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 0 48px">
+
+  <!-- WHATSAPP -->
+  <div style="background:#fff;border-radius:20px;border:2px solid #ede9fb;padding:22px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f0eef8">
+      <div style="width:44px;height:44px;border-radius:12px;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💬</div>
+      <div>
+        <div style="font-size:16px;font-weight:900;color:#1e1b4b">WhatsApp Business API</div>
+        <div style="font-size:11px;color:#9f8ec4;margin-top:2px">Meta Cloud API · שליחת הודעות להורים</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">
+      <div style="background:#fee2e2;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#dc2626">1.</span> <span style="color:#1e1b4b;font-weight:700">פתיחת חשבון Meta Business</span><br><span style="color:#7c6a9e">business.facebook.com</span></div>
+      <div style="background:#fee2e2;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#dc2626">2.</span> <span style="color:#1e1b4b;font-weight:700">הוספת מספר טלפון ייעודי ב-Meta Developer</span><br><span style="color:#7c6a9e">מקבלים WHATSAPP_PHONE_ID</span></div>
+      <div style="background:#fee2e2;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#dc2626">3.</span> <span style="color:#1e1b4b;font-weight:700">קבלת Access Token</span><br><span style="color:#7c6a9e">מקבלים WHATSAPP_TOKEN</span></div>
+      <div style="background:#fef3c7;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#d97706">4.</span> <span style="color:#1e1b4b;font-weight:700">הוספת env vars ב-Vercel</span><br><code style="font-size:10px;color:#5b3aab">WHATSAPP_TOKEN + WHATSAPP_PHONE_ID</code></div>
+      <div style="background:#fef3c7;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#d97706">5.</span> <span style="color:#1e1b4b;font-weight:700">רישום Webhook</span><br><code style="font-size:10px;color:#5b3aab">…vercel.app/api/whatsapp</code></div>
+      <div style="background:#d1fae5;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#059669">✓</span> <span style="color:#1e1b4b;font-weight:700">הקוד מוכן במערכת</span></div>
+    </div>
+  </div>
+
+  <!-- CARDCOM -->
+  <div style="background:#fff;border-radius:20px;border:2px solid #ede9fb;padding:22px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f0eef8">
+      <div style="width:44px;height:44px;border-radius:12px;background:#ede9fb;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💳</div>
+      <div>
+        <div style="font-size:16px;font-weight:900;color:#1e1b4b">Cardcom — סליקת אשראי</div>
+        <div style="font-size:11px;color:#9f8ec4;margin-top:2px">קישור תשלום להורים · עדכון אוטומטי</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">
+      <div style="background:#fee2e2;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#dc2626">1.</span> <span style="color:#1e1b4b;font-weight:700">פתיחת חשבון סוחר ב-Cardcom</span><br><span style="color:#7c6a9e">03-7219966 · cardcom.solutions</span></div>
+      <div style="background:#fee2e2;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#dc2626">2.</span> <span style="color:#1e1b4b;font-weight:700">קבלת פרטי API מ-Cardcom</span><br><code style="font-size:10px;color:#5b3aab">Terminal ID · API Name · API Password</code></div>
+      <div style="background:#fef3c7;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#d97706">3.</span> <span style="color:#1e1b4b;font-weight:700">הוספת env vars ב-Vercel</span><br><code style="font-size:10px;color:#5b3aab">CARDCOM_TERMINAL + CARDCOM_API_NAME + CARDCOM_API_PASSWORD</code></div>
+      <div style="background:#fef3c7;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#d97706">4.</span> <span style="color:#1e1b4b;font-weight:700">הגדרת Webhook ב-Cardcom</span><br><code style="font-size:10px;color:#5b3aab">…vercel.app/api/payments/webhook</code></div>
+      <div style="background:#d1fae5;border-radius:10px;padding:10px 12px"><span style="font-weight:800;color:#059669">✓</span> <span style="color:#1e1b4b;font-weight:700">הקוד מוכן במערכת</span></div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
