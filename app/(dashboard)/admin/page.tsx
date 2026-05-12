@@ -3,7 +3,10 @@ import { redirect } from 'next/navigation'
 import { UsersTable } from '@/components/admin/users-table'
 import { SetupChecklist } from '@/components/admin/setup-checklist'
 import { NetworkSettingsForm } from '@/components/admin/network-settings-form'
-import { Shield } from 'lucide-react'
+import { GrantTypesAdmin } from '@/components/admin/grant-types-admin'
+import { RolesPanel } from '@/components/admin/roles-panel'
+import { Shield, Gift, UserCog } from 'lucide-react'
+import type { GrantType } from '@/lib/types'
 
 export default async function AdminPage() {
   const supabase = await createClient()
@@ -12,10 +15,10 @@ export default async function AdminPage() {
   if (!user) redirect('/login')
 
   const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
-  if (profile?.role !== 'אדמין מערכת' && profile?.role !== 'מנהל רשת') redirect('/dashboard')
+  if (profile?.role !== 'אדמין מערכת' && profile?.role !== 'מנהל מערכת' && profile?.role !== 'מנהל רשת') redirect('/dashboard')
 
   const service = createServiceClient()
-  const [{ data: profiles }, { data: camps }] = await Promise.all([
+  const [{ data: profiles }, { data: camps }, { data: grantTypes }] = await Promise.all([
     service
       .from('profiles')
       .select('id, full_name, role, phone, camp_users(camp_id, camps(id, name))')
@@ -24,6 +27,10 @@ export default async function AdminPage() {
       .from('camps')
       .select('id, name, school_year, cardcom_terminal')
       .order('name'),
+    service
+      .from('grant_types')
+      .select('*')
+      .order('sort_order'),
   ])
 
   const campsArr = camps ?? []
@@ -55,6 +62,33 @@ export default async function AdminPage() {
       />
 
       <NetworkSettingsForm />
+
+      {/* Grant types management */}
+      <div className="rounded-xl border border-[#E5E5E8] bg-white shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2.5 bg-[#333654] px-4 py-3">
+          <Gift className="h-4 w-4 text-[#F8AD1D]" />
+          <span className="text-sm font-bold text-white">סוגי מענקי פעילות</span>
+          <span className="text-xs text-white/50 mr-auto">הקייטנות יראו את הסוגים האלה בדף הכספים</span>
+        </div>
+        <div className="p-4">
+          <GrantTypesAdmin initial={(grantTypes ?? []) as GrantType[]} />
+        </div>
+      </div>
+
+      {/* Roles & permissions management */}
+      <div className="rounded-xl border border-[#E5E5E8] bg-white shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2.5 bg-[#333654] px-4 py-3">
+          <UserCog className="h-4 w-4 text-[#00B1AE]" />
+          <span className="text-sm font-bold text-white">תפקידים והרשאות</span>
+          <span className="text-xs text-white/50 mr-auto">הגדר מורשים לכל תפקיד</span>
+        </div>
+        <div className="p-4">
+          <RolesPanel
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            profiles={profilesArr as any}
+          />
+        </div>
+      </div>
 
       <UsersTable
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
