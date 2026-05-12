@@ -18,15 +18,14 @@ export async function POST(request: Request) {
 
   // אימות סוד webhook — Cardcom שולח את ה-IndicatorSecret שהגדרנו בעת יצירת העסקה
   const webhookSecret = process.env.CARDCOM_WEBHOOK_SECRET
-  if (webhookSecret) {
-    const received = body['IndicatorSecret'] ?? body['indicatorsecret'] ?? body['indicatorSecret']
-    if (received !== webhookSecret) {
-      console.error('[Webhook] Invalid IndicatorSecret')
-      return NextResponse.json({ ok: false, error: 'Invalid secret' }, { status: 403 })
-    }
-  } else {
-    // אזהרה אם הסוד לא מוגדר — לא בלוק (לא לשבור קיים) אבל רושם שגיאה
-    console.warn('[Webhook] CARDCOM_WEBHOOK_SECRET not set — webhook unauthenticated!')
+  if (!webhookSecret) {
+    console.error('[Webhook] CARDCOM_WEBHOOK_SECRET is not set — rejecting all webhook calls for security')
+    return NextResponse.json({ ok: false, error: 'Webhook not configured' }, { status: 503 })
+  }
+  const received = body['IndicatorSecret'] ?? body['indicatorsecret'] ?? body['indicatorSecret']
+  if (received !== webhookSecret) {
+    console.error('[Webhook] Invalid IndicatorSecret — possible spoofed payment')
+    return NextResponse.json({ ok: false, error: 'Invalid secret' }, { status: 403 })
   }
 
   const txId = body['ReturnValue'] ?? body['InternalDealNumber']
