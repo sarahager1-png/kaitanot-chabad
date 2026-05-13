@@ -191,8 +191,9 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
       )}
 
       {profiles.map((profile) => {
-        const Icon = roleIcon[profile.role]
-        const assignedCampIds = new Set(profile.camp_users.map(cu => cu.camp_id))
+        const Icon = roleIcon[profile.role] ?? User
+        const campUsers = profile.camp_users ?? []
+        const assignedCampIds = new Set(campUsers.map((cu: { camp_id: string }) => cu.camp_id))
         const unassignedCamps = camps.filter(c => !assignedCampIds.has(c.id))
 
         return (
@@ -231,7 +232,7 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <span className="text-xs text-[#9091A8] font-medium">קייטנות:</span>
 
-              {profile.camp_users.map((cu) => (
+              {campUsers.map((cu: { camp_id: string; camps: { id: string; name: string } | null }) => (
                 <span
                   key={cu.camp_id}
                   className="flex items-center gap-1 rounded-lg bg-[#E0F7F7] px-2.5 py-1 text-xs font-semibold text-[#00B1AE]"
@@ -261,7 +262,7 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
                 </select>
               )}
 
-              {profile.camp_users.length === 0 && unassignedCamps.length === 0 && (
+              {campUsers.length === 0 && unassignedCamps.length === 0 && (
                 <span className="text-xs text-[#9091A8] italic">אין קייטנות במערכת</span>
               )}
             </div>

@@ -25,6 +25,11 @@ import {
   FileDown,
   Settings,
   ClipboardSignature,
+  FileText,
+  Ticket,
+  BarChart2,
+  CreditCard,
+  Banknote,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -39,8 +44,13 @@ const navItems = [
   { href: '/finance', label: 'כספים', icon: ShekelIcon, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
   { href: '/services', label: 'שירותים ואספקה', icon: ShoppingCart, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
   { href: '/documents', label: 'מסמכים', icon: FileCheck, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
+  { href: '/agreements', label: 'הסכמים', icon: FileText, roles: ['מנהל רשת', 'אדמין מערכת'] },
   { href: '/contract', label: 'חוזה מנהלת', icon: ClipboardSignature, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
   { href: '/forms', label: 'טפסים', icon: FileDown, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
+  { href: '/vouchers', label: 'שוברים', icon: Ticket, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
+  { href: '/simulations', label: 'סימולציית תקציב', icon: BarChart2, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
+  { href: '/salaries', label: 'משכורות', icon: Banknote, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
+  { href: '/requests', label: 'בקשות תשלום', icon: CreditCard, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
   { href: '/staff', label: 'צוות', icon: UserCheck, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
   { href: '/planning', label: 'תכנון', icon: CalendarDays, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },
   { href: '/trips', label: 'טיולים', icon: MapPin, roles: ['שליח', 'מנהל קייטנה', 'מנהל רשת', 'אדמין מערכת'] },

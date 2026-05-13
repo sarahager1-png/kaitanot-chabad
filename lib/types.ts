@@ -111,6 +111,7 @@ export interface Budget {
   category: string
   planned_amount: number
   alert_threshold: number
+  budget_type?: 'קבועה' | 'לילד'
 }
 
 export type ServiceCategory = 'אוזניות' | 'סובלימציה' | 'קצף' | 'ערכות לילדים' | 'אביזרים'
@@ -263,6 +264,56 @@ export interface VendorReview {
   camp_id: string | null
   stars: number
   comment: string | null
+  created_at: string
+}
+
+export interface VoucherType {
+  id: string
+  name: string
+  description: string | null
+  price: number | null
+  emoji: string
+  expiry_date: string | null
+  audience: 'חניכים' | 'צוות' | 'הכל'
+  is_active: boolean
+  created_at: string
+}
+
+export interface Employee {
+  id: string
+  camp_id: string
+  name: string
+  role: string | null
+  monthly_salary: number
+  notes: string | null
+  is_active: boolean
+  created_at: string
+}
+
+export interface SalaryPayment {
+  id: string
+  camp_id: string
+  employee_id: string
+  month: string
+  amount: number
+  status: 'pending' | 'paid'
+  receipt_url: string | null
+  notes: string | null
+  paid_at: string | null
+}
+
+export type RequestStatus = 'pending' | 'in_progress' | 'paid' | 'completed'
+
+export interface PaymentRequest {
+  id: string
+  camp_id: string
+  name: string
+  amount: number
+  category: string | null
+  notes: string | null
+  status: RequestStatus
+  receipt_url: string | null
+  paid_at: string | null
   created_at: string
 }
 
