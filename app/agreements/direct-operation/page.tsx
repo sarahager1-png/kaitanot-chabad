@@ -6,7 +6,7 @@ import { CheckCircle, Loader2 } from 'lucide-react'
 
 export default function DirectOperationPage() {
   const sigRef = useRef<SignatureCanvasRef>(null)
-  const [form, setForm] = useState({ emissary: '', city: '', camp_year: new Date().getFullYear().toString(), sign_day: '', sign_place: '' })
+  const [form, setForm] = useState({ emissary: '', city: '', sign_day: '', sign_place: '' })
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -30,7 +30,7 @@ export default function DirectOperationPage() {
       const res = await fetch('/api/signed-agreements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ agreement_type: 'direct-operation', ...form, signature_data: sigRef.current?.toDataURL() }),
+        body: JSON.stringify({ agreement_type: 'direct-operation', ...form, camp_year: 'תשפ"ו', signature_data: sigRef.current?.toDataURL() }),
       })
       if (!res.ok) throw new Error((await res.json()).error)
       setDone(true)
@@ -142,7 +142,7 @@ export default function DirectOperationPage() {
                   <span className="font-semibold">4.1. </span>
                   הסכם זה הינו לקייטנת קיץ בשנת:{' '}
                   <span className="inline-block border-b border-[#333654] min-w-[100px] font-semibold px-1">
-                    {form.camp_year}
+                    תשפ&quot;ו
                   </span>
                   {' '}ויחודש בהסכמת שני הצדדים ככל שידרש לשנים הבאות.
                 </li>
@@ -168,11 +168,6 @@ export default function DirectOperationPage() {
             <div className="flex flex-col gap-1.5">
               <label htmlFor="do-city" className="text-xs font-bold text-[#6B6D8A]">עיר / ישוב *</label>
               <input id="do-city" title="עיר או ישוב" value={form.city} onChange={e => setForm(p => ({ ...p, city: e.target.value }))}
-                className="h-10 rounded-lg border border-[#E5E5E8] px-3 text-sm focus:border-[#00B1AE] focus:outline-none" />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="do-year" className="text-xs font-bold text-[#6B6D8A]">שנת הקייטנה</label>
-              <input id="do-year" title="שנת הקייטנה" value={form.camp_year} onChange={e => setForm(p => ({ ...p, camp_year: e.target.value }))}
                 className="h-10 rounded-lg border border-[#E5E5E8] px-3 text-sm focus:border-[#00B1AE] focus:outline-none" />
             </div>
             <div className="flex flex-col gap-1.5">

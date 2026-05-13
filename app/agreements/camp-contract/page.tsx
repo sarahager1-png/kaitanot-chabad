@@ -6,7 +6,7 @@ import { CheckCircle, Loader2 } from 'lucide-react'
 
 export default function CampContractPage() {
   const sigRef = useRef<SignatureCanvasRef>(null)
-  const [form, setForm] = useState({ emissary: '', city: '', camp_year: new Date().getFullYear().toString(), sign_day: '', sign_place: '' })
+  const [form, setForm] = useState({ emissary: '', city: '', sign_day: '', sign_place: '' })
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -30,7 +30,7 @@ export default function CampContractPage() {
       const res = await fetch('/api/signed-agreements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ agreement_type: 'camp-contract', ...form, signature_data: sigRef.current?.toDataURL() }),
+        body: JSON.stringify({ agreement_type: 'camp-contract', ...form, camp_year: 'תשפ"ו', signature_data: sigRef.current?.toDataURL() }),
       })
       if (!res.ok) throw new Error((await res.json()).error)
       setDone(true)
