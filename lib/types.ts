@@ -317,6 +317,16 @@ export interface PaymentRequest {
   created_at: string
 }
 
+export interface GrantType {
+  id: string
+  name: string
+  description: string | null
+  amount: number | null
+  sort_order: number
+  is_active: boolean
+  created_at: string
+}
+
 export interface DashboardStats {
   total_registrants: number
   registration_goal: number
