@@ -26,6 +26,7 @@ interface FinanceClientProps {
   expenses: ExpenseEntry[]
   budgets: Budget[]
   campId: string
+  registrantCount: number
 }
 
 const categoryColor: Record<string, string> = {
@@ -41,7 +42,7 @@ const categoryColor: Record<string, string> = {
   'אחר':        'bg-[#F5F5F3] text-[#6B6D8A]',
 }
 
-export function FinanceClient({ income, expenses, budgets, campId }: FinanceClientProps) {
+export function FinanceClient({ income, expenses, budgets, campId, registrantCount }: FinanceClientProps) {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<ActiveTab>('income')
   const [formOpen, setFormOpen] = useState(false)
@@ -177,7 +178,7 @@ export function FinanceClient({ income, expenses, budgets, campId }: FinanceClie
             <h3 className="text-sm font-semibold text-white/90 tracking-wide">תקציב מול בפועל</h3>
           </div>
           <div className="p-4">
-            <BudgetOverview budgets={budgets} expenses={localExpenses} campId={campId} />
+            <BudgetOverview budgets={budgets} expenses={localExpenses} campId={campId} registrantCount={registrantCount} />
           </div>
         </div>
       )}

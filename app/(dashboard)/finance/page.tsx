@@ -37,10 +37,11 @@ export default async function FinancePage() {
     )
   }
 
-  const [{ data: income }, { data: expenses }, { data: budgets }] = await Promise.all([
+  const [{ data: income }, { data: expenses }, { data: budgets }, { count: registrantCount }] = await Promise.all([
     service.from('income_entries').select('*').eq('camp_id', campId).order('entry_date', { ascending: false }),
     service.from('expense_entries').select('*').eq('camp_id', campId).order('entry_date', { ascending: false }),
     service.from('budgets').select('*').eq('camp_id', campId),
+    service.from('registrants').select('id', { count: 'exact', head: true }).eq('camp_id', campId),
   ])
 
   const totalIncome = (income ?? []).reduce((s, r) => s + Number(r.amount), 0)
@@ -82,6 +83,7 @@ export default async function FinancePage() {
         expenses={expenses as ExpenseEntry[] ?? []}
         budgets={budgets as Budget[] ?? []}
         campId={campId}
+        registrantCount={registrantCount ?? 0}
       />
     </div>
   )

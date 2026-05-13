@@ -11,9 +11,10 @@ interface BudgetOverviewProps {
   budgets: Budget[]
   expenses: ExpenseEntry[]
   campId: string
+  registrantCount?: number
 }
 
-export function BudgetOverview({ budgets: initialBudgets, expenses, campId }: BudgetOverviewProps) {
+export function BudgetOverview({ budgets: initialBudgets, expenses, campId, registrantCount = 0 }: BudgetOverviewProps) {
   const router = useRouter()
   const [budgets, setBudgets] = useState(initialBudgets)
   const [editing, setEditing] = useState<string | null>(null)
@@ -110,6 +111,11 @@ export function BudgetOverview({ budgets: initialBudgets, expenses, campId }: Bu
                       {pct}%
                     </span>
                     <span className="text-xs text-[#9091A8]">₪{actual.toLocaleString()} / ₪{b.planned_amount.toLocaleString()}</span>
+                    {registrantCount > 0 && actual > 0 && (
+                      <span className="text-xs font-semibold bg-[#FEF0EC] text-[#333654] px-2 py-0.5 rounded-full" title="עלות לילד">
+                        ₪{Math.round(actual / registrantCount).toLocaleString()} לילד
+                      </span>
+                    )}
                     <button
                       onClick={() => { setEditing(b.category); setEditValue(String(b.planned_amount)) }}
                       className="flex h-7 w-7 items-center justify-center rounded-lg text-[#9091A8] hover:bg-[#F5F5F3] hover:text-[#00B1AE] transition-colors"
@@ -126,6 +132,19 @@ export function BudgetOverview({ budgets: initialBudgets, expenses, campId }: Bu
           </div>
         )
       })}
+
+      {/* Per-child total summary */}
+      {registrantCount > 0 && budgets.length > 0 && (
+        <div className="rounded-xl border border-[#F8AD1D]/40 bg-[#FEFCF5] p-3 flex items-center justify-between">
+          <span className="text-sm font-bold text-[#333654]">סה&quot;כ עלות לילד</span>
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-[#9091A8]">{registrantCount} ילדים</span>
+            <span className="text-base font-black text-[#333654]">
+              ₪{registrantCount > 0 ? Math.round(Object.values(actualByCategory).reduce((s, v) => s + v, 0) / registrantCount).toLocaleString() : '—'}
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Add new budget category */}
       {addOpen ? (
