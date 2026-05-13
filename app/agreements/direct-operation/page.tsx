@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { SignatureCanvas, SignatureCanvasRef } from '@/components/agreements/signature-canvas'
 import { CheckCircle, Loader2 } from 'lucide-react'
 
@@ -10,6 +10,14 @@ export default function DirectOperationPage() {
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [rabbiSig, setRabbiSig] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetch('/api/settings?key=rabbi_signature_data')
+      .then(r => r.json())
+      .then(d => { if (d.value) setRabbiSig(d.value) })
+      .catch(() => {})
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -54,6 +62,12 @@ export default function DirectOperationPage() {
         {/* Agreement document */}
         <div className="bg-white rounded-2xl border border-[#E5E5E8] shadow-sm mb-6 overflow-hidden print:shadow-none print:border-none print:rounded-none">
           <div className="p-8 text-sm text-[#333654] leading-7 space-y-4">
+
+            {/* Logo */}
+            <div className="flex justify-center mb-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-kaitanot.jpg" alt="רשת קייטנות חב&quot;ד" className="h-20 object-contain" />
+            </div>
 
             <p className="text-center font-bold text-base">ב&quot;ה</p>
             <h1 className="text-center text-xl font-black text-[#333654]">הסכם הפעלה ישירה</h1>
@@ -174,9 +188,24 @@ export default function DirectOperationPage() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-[#6B6D8A]">חתימת נציג הסניף / השליח *</label>
-            <SignatureCanvas ref={sigRef} />
+          {/* Signatures row */}
+          <div className="grid grid-cols-2 gap-6">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-[#6B6D8A]">חתימת נציג הסניף / השליח *</label>
+              <SignatureCanvas ref={sigRef} />
+              <p className="text-xs text-center text-[#9091A8] mt-1">{form.emissary || 'נציג הסניף / השליח'}</p>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <p className="text-xs font-bold text-[#6B6D8A]">חתימת מנהל אגף מבצע חינוך</p>
+              <div className="rounded-xl border-2 border-dashed border-[#E5E5E8] bg-[#F9F9F7] flex items-center justify-center overflow-hidden h-[100px]">
+                {rabbiSig
+                  ? /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={rabbiSig} alt="חתימת הרב" className="w-full h-full object-contain p-2" />
+                  : <span className="text-xs text-[#C9A84C]/60">טוען חתימה...</span>
+                }
+              </div>
+              <p className="text-xs text-center text-[#9091A8] mt-1">הרב אליהו קריצ&apos;בסקי</p>
+            </div>
           </div>
 
           {error && <p className="text-sm text-[#C8251D] bg-[#FDE8E7] rounded-lg px-3 py-2">{error}</p>}
