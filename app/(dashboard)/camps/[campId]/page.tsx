@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { isManager } from '@/lib/roles'
 import Link from 'next/link'
-import { MapPin, Edit, ArrowRight, Calendar, Users, UserCheck, CalendarDays, Share2, CreditCard, Palette, ExternalLink } from 'lucide-react'
+import { MapPin, Edit, ArrowRight, Calendar, Users, UserCheck, CalendarDays, Share2, CreditCard, Palette, ExternalLink, Download, Link2 } from 'lucide-react'
 import { ShekelIcon } from '@/components/icons/shekel-icon'
 import { GoalEditor } from '@/components/camps/goal-editor'
 import { format, parseISO } from 'date-fns'
@@ -163,24 +163,30 @@ export default async function CampDetailPage({ params }: { params: Promise<{ cam
         )}
 
         {/* Quick links */}
-        <div className="grid grid-cols-2 gap-3">
-          {quickLinks.map((link) => {
-            const Icon = link.icon
-            return (
-              <Link key={link.href} href={link.href}
-                className="flex items-center gap-3 rounded-xl border border-[#E5E5E8] bg-white p-4 shadow-sm hover:border-[#00B1AE]/40 hover:shadow-md transition-all group">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${link.bg} flex-shrink-0`}>
-                  <Icon className={`h-5 w-5 ${link.color}`} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-[#333654]">{link.label}</p>
-                  {link.value !== null && (
-                    <p className="text-xs text-[#9091A8]">{link.value} רשומים</p>
-                  )}
-                </div>
-              </Link>
-            )
-          })}
+        <div className="rounded-xl border border-[#E5E5E8] bg-white shadow-sm p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Link2 className="h-4 w-4 text-[#9091A8]" />
+            <span className="text-sm font-bold text-[#333654]">קישורים מהירים</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {quickLinks.map((link) => {
+              const Icon = link.icon
+              return (
+                <Link key={link.href} href={link.href}
+                  className="flex items-center gap-3 rounded-xl border border-[#E5E5E8] bg-[#F8F8F7] p-3 hover:border-[#00B1AE]/40 hover:bg-white hover:shadow-sm transition-all group">
+                  <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${link.bg} flex-shrink-0`}>
+                    <Icon className={`h-4 w-4 ${link.color}`} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-[#333654]">{link.label}</p>
+                    {link.value !== null && (
+                      <p className="text-xs text-[#9091A8]">{link.value}</p>
+                    )}
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
         </div>
 
         {/* Designs & Publications */}
@@ -195,11 +201,21 @@ export default async function CampDetailPage({ params }: { params: Promise<{ cam
               { label: 'מודעות סט 2 — קייטנה רגילה', href: 'https://canva.link/1ue7zpeuxyfjxd5' },
               { label: 'מודעות קייטנה על גלגלים', href: 'https://canva.link/c5kfn48l9vyc8ci' },
             ].map((item) => (
-              <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-between rounded-lg bg-[#F5F5F3] px-3 py-2.5 hover:bg-[#EEEEED] transition-colors group">
+              <div key={item.href} className="flex items-center justify-between rounded-lg bg-[#F5F5F3] px-3 py-2.5">
                 <span className="text-sm font-semibold text-[#333654]">{item.label}</span>
-                <ExternalLink className="h-3.5 w-3.5 text-[#9091A8] group-hover:text-[#00B1AE] transition-colors shrink-0" />
-              </a>
+                <div className="flex items-center gap-1.5">
+                  <a href={item.href} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-1 rounded-md bg-white border border-[#E5E5E8] px-2 py-1 text-xs font-semibold text-[#6B6D8A] hover:border-[#00B1AE] hover:text-[#00B1AE] transition-colors">
+                    <ExternalLink className="h-3 w-3" />
+                    צפייה
+                  </a>
+                  <a href={item.href} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-1 rounded-md bg-[#00B1AE] px-2 py-1 text-xs font-semibold text-white hover:bg-[#009E9B] transition-colors">
+                    <Download className="h-3 w-3" />
+                    הורדה
+                  </a>
+                </div>
+              </div>
             ))}
           </div>
         </div>
