@@ -19,14 +19,19 @@ export async function POST(request: Request) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
     return NextResponse.json({ error: 'כתובת מייל לא תקינה' }, { status: 400 })
 
-  // ולידציית role — מניעת הזרקת תפקידים לא מורשים
   if (!VALID_ROLES.has(role))
     return NextResponse.json({ error: `תפקיד לא תקין: ${role}` }, { status: 400 })
 
-  const { data, error } = await service.auth.admin.inviteUserByEmail(email, {
-    data: { full_name, role },
+  // generateLink יוצר משתמש ומחזיר קישור הזמנה בלי לשלוח מייל — עוקף את ה-rate limit
+  const { data, error } = await service.auth.admin.generateLink({
+    type: 'invite',
+    email,
+    options: { data: { full_name, role } },
   })
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
-  return NextResponse.json({ id: data.user.id })
+  return NextResponse.json({
+    id: data.user.id,
+    invite_link: data.properties.action_link,
+  })
 }

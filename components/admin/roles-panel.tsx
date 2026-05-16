@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Crown, Shield, Star, User, Plus, X, Mail, Loader2 } from 'lucide-react'
+import { Crown, Shield, Star, User, Plus, X, Mail, Loader2, Copy, Check, Link } from 'lucide-react'
 
 interface Profile {
   id: string
@@ -74,6 +74,8 @@ export function RolesPanel({ profiles: initialProfiles }: RolesPanelProps) {
   const [addingRole, setAddingRole] = useState<string | null>(null)
   const [form, setForm] = useState({ email: '', full_name: '' })
   const [loading, setLoading] = useState(false)
+  const [inviteLink, setInviteLink] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
 
   async function handleAdd(e: React.FormEvent) {
     e.preventDefault()
@@ -86,20 +88,33 @@ export function RolesPanel({ profiles: initialProfiles }: RolesPanelProps) {
         body: JSON.stringify({ email: form.email, full_name: form.full_name, role: addingRole }),
       })
       if (!res.ok) throw new Error((await res.json()).error)
-      toast.success(`${form.full_name || form.email} נוסף כ${addingRole}`)
+      const json = await res.json()
       setProfiles(p => [...p, {
-        id: Math.random().toString(),
+        id: json.id,
         full_name: form.full_name || form.email,
         role: addingRole,
         phone: null,
       }])
-      setAddingRole(null)
-      setForm({ email: '', full_name: '' })
+      setInviteLink(json.invite_link)
     } catch (err) {
       toast.error('שגיאה: ' + String(err))
     } finally {
       setLoading(false)
     }
+  }
+
+  function closeModal() {
+    setAddingRole(null)
+    setInviteLink(null)
+    setForm({ email: '', full_name: '' })
+    setCopied(false)
+  }
+
+  async function copyLink() {
+    if (!inviteLink) return
+    await navigator.clipboard.writeText(inviteLink)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
@@ -164,6 +179,7 @@ export function RolesPanel({ profiles: initialProfiles }: RolesPanelProps) {
 
                 {/* Add authorized button */}
                 <button
+                  type="button"
                   onClick={() => { setAddingRole(def.role); setForm({ email: '', full_name: '' }) }}
                   className="flex items-center justify-center gap-1.5 rounded-lg border border-dashed py-1.5 text-xs font-semibold transition-colors hover:bg-opacity-50"
                   style={{ borderColor: def.border, color: def.color }}
@@ -180,49 +196,82 @@ export function RolesPanel({ profiles: initialProfiles }: RolesPanelProps) {
       {/* Add authorized modal */}
       {addingRole && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" dir="rtl">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setAddingRole(null)} />
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeModal} />
           <div className="relative w-full max-w-sm rounded-2xl bg-white shadow-2xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#E5E5E8]">
               <div>
                 <h2 className="font-black text-[#333654] text-sm">הוספת מורשה</h2>
                 <p className="text-xs text-[#9091A8] mt-0.5">תפקיד: {addingRole}</p>
               </div>
-              <button onClick={() => setAddingRole(null)} className="text-[#9091A8] hover:text-[#6B6D8A]">
+              <button type="button" title="סגור" onClick={closeModal} className="text-[#9091A8] hover:text-[#6B6D8A]">
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <form onSubmit={handleAdd} className="flex flex-col gap-4 p-5">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#333654]">כתובת Gmail *</label>
-                <div className="relative">
-                  <Mail className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9091A8]" />
+
+            {inviteLink ? (
+              <div className="flex flex-col gap-4 p-5">
+                <div className="flex flex-col gap-2 rounded-xl bg-[#E0F7F7] p-4">
+                  <div className="flex items-center gap-2 text-sm font-bold text-[#00B1AE]">
+                    <Link className="h-4 w-4 flex-shrink-0" />
+                    המשתמש נוצר בהצלחה
+                  </div>
+                  <p className="text-xs text-[#6B6D8A]">
+                    שלח את הקישור הבא למשתמש — הוא ישמש להגדרת הסיסמה:
+                  </p>
+                  <div className="rounded-lg bg-white border border-[#E5E5E8] p-2.5 text-xs text-[#333654] break-all font-mono" dir="ltr">
+                    {inviteLink}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={copyLink}
+                  className="flex items-center justify-center gap-2 rounded-lg bg-[#333654] py-2.5 text-sm font-bold text-white hover:bg-[#444668] transition-colors"
+                >
+                  {copied ? <><Check className="h-4 w-4" />הועתק!</> : <><Copy className="h-4 w-4" />העתק קישור</>}
+                </button>
+                <button type="button" onClick={closeModal}
+                  className="rounded-lg border border-[#E5E5E8] py-2.5 text-sm font-semibold text-[#6B6D8A] hover:bg-[#F5F5F3]">
+                  סגור
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleAdd} className="flex flex-col gap-4 p-5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold text-[#333654]">כתובת Gmail *</label>
+                  <div className="relative">
+                    <Mail className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9091A8]" />
+                    <input
+                      type="email" required dir="ltr"
+                      title="כתובת Gmail"
+                      placeholder="name@gmail.com"
+                      value={form.email}
+                      onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
+                      className="w-full h-10 rounded-lg border border-[#E5E5E8] pr-9 pl-3 text-sm focus:border-[#00B1AE] focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold text-[#333654]">שם מלא</label>
                   <input
-                    type="email" required dir="ltr"
-                    value={form.email}
-                    onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
-                    className="w-full h-10 rounded-lg border border-[#E5E5E8] pr-9 pl-3 text-sm focus:border-[#00B1AE] focus:outline-none"
+                    title="שם מלא"
+                    placeholder="ישראל ישראלי"
+                    value={form.full_name}
+                    onChange={(e) => setForm(f => ({ ...f, full_name: e.target.value }))}
+                    className="h-10 rounded-lg border border-[#E5E5E8] px-3 text-sm focus:border-[#00B1AE] focus:outline-none"
                   />
                 </div>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#333654]">שם מלא</label>
-                <input
-                  value={form.full_name}
-                  onChange={(e) => setForm(f => ({ ...f, full_name: e.target.value }))}
-                  className="h-10 rounded-lg border border-[#E5E5E8] px-3 text-sm focus:border-[#00B1AE] focus:outline-none"
-                />
-              </div>
-              <div className="flex gap-3 pt-1">
-                <button type="button" onClick={() => setAddingRole(null)}
-                  className="flex-1 rounded-lg border border-[#E5E5E8] py-2.5 text-sm font-semibold text-[#6B6D8A] hover:bg-[#F5F5F3]">
-                  ביטול
-                </button>
-                <button type="submit" disabled={loading}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-[#333654] py-2.5 text-sm font-bold text-white hover:bg-[#444668] disabled:opacity-60">
-                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'הוסף מורשה'}
-                </button>
-              </div>
-            </form>
+                <div className="flex gap-3 pt-1">
+                  <button type="button" onClick={closeModal}
+                    className="flex-1 rounded-lg border border-[#E5E5E8] py-2.5 text-sm font-semibold text-[#6B6D8A] hover:bg-[#F5F5F3]">
+                    ביטול
+                  </button>
+                  <button type="submit" disabled={loading}
+                    className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-[#333654] py-2.5 text-sm font-bold text-white hover:bg-[#444668] disabled:opacity-60">
+                    {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'הוסף מורשה'}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}

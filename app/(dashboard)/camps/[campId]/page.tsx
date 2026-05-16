@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import { isManager } from '@/lib/roles'
 import Link from 'next/link'
-import { MapPin, Edit, ArrowRight, Calendar, Users, UserCheck, CalendarDays, Share2, CreditCard } from 'lucide-react'
+import { MapPin, Edit, ArrowRight, Calendar, Users, UserCheck, CalendarDays, Share2, CreditCard, Palette, ExternalLink } from 'lucide-react'
 import { ShekelIcon } from '@/components/icons/shekel-icon'
 import { GoalEditor } from '@/components/camps/goal-editor'
 import { format, parseISO } from 'date-fns'
@@ -181,6 +181,27 @@ export default async function CampDetailPage({ params }: { params: Promise<{ cam
               </Link>
             )
           })}
+        </div>
+
+        {/* Designs & Publications */}
+        <div className="rounded-xl border border-[#E5E5E8] bg-white shadow-sm p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Palette className="h-4 w-4 text-[#9091A8]" />
+            <span className="text-sm font-bold text-[#333654]">עיצובים ופרסומים</span>
+          </div>
+          <div className="flex flex-col gap-2">
+            {[
+              { label: 'מודעות סט 1 — קייטנה רגילה', href: 'https://canva.link/7gli9x011qumgay' },
+              { label: 'מודעות סט 2 — קייטנה רגילה', href: 'https://canva.link/1ue7zpeuxyfjxd5' },
+              { label: 'מודעות קייטנה על גלגלים', href: 'https://canva.link/c5kfn48l9vyc8ci' },
+            ].map((item) => (
+              <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-between rounded-lg bg-[#F5F5F3] px-3 py-2.5 hover:bg-[#EEEEED] transition-colors group">
+                <span className="text-sm font-semibold text-[#333654]">{item.label}</span>
+                <ExternalLink className="h-3.5 w-3.5 text-[#9091A8] group-hover:text-[#00B1AE] transition-colors shrink-0" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </div>

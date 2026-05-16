@@ -89,7 +89,7 @@ export function LoginForm({ campName }: { campName?: string }) {
 
         {/* Footer */}
         <p className="text-[11px] text-white/20 relative z-10">
-          קייטנות חב״ד
+          פיתוח ובניית אתר: שרה הגר 0503339770
         </p>
       </div>
 
@@ -215,6 +215,10 @@ export function LoginForm({ campName }: { campName?: string }) {
             </div>
           </div>
         </div>
+
+        <p className="mt-8 text-center text-[10px] text-[#DADADA]">
+          פיתוח ובניית אתר: שרה הגר 0503339770
+        </p>
       </div>
     </div>
   )

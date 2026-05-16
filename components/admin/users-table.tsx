@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { Users, ChevronDown, X, Plus, Shield, User, Crown, Mail, Loader2, Star } from 'lucide-react'
+import { Users, ChevronDown, X, Plus, Shield, User, Crown, Mail, Loader2, Star, Copy, Check, Link } from 'lucide-react'
 import type { UserRole } from '@/lib/types'
 
 interface Profile {
@@ -45,6 +45,8 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
   const [inviteOpen, setInviteOpen] = useState(false)
   const [inviteForm, setInviteForm] = useState({ email: '', full_name: '', role: 'שליח' as UserRole })
   const [inviteLoading, setInviteLoading] = useState(false)
+  const [inviteLink, setInviteLink] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
 
   async function handleInvite(e: React.FormEvent) {
     e.preventDefault()
@@ -56,14 +58,34 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
         body: JSON.stringify(inviteForm),
       })
       if (!res.ok) throw new Error((await res.json()).error)
-      toast.success(`הזמנה נשלחה ל-${inviteForm.email}`)
-      setInviteOpen(false)
-      setInviteForm({ email: '', full_name: '', role: 'שליח' })
+      const json = await res.json()
+      setProfiles(p => [...p, {
+        id: json.id,
+        full_name: inviteForm.full_name || inviteForm.email,
+        role: inviteForm.role,
+        phone: null,
+        camp_users: [],
+      }])
+      setInviteLink(json.invite_link)
     } catch (err) {
       toast.error('שגיאה: ' + String(err))
     } finally {
       setInviteLoading(false)
     }
+  }
+
+  function closeInvite() {
+    setInviteOpen(false)
+    setInviteLink(null)
+    setInviteForm({ email: '', full_name: '', role: 'שליח' })
+    setCopied(false)
+  }
+
+  async function copyLink() {
+    if (!inviteLink) return
+    await navigator.clipboard.writeText(inviteLink)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   async function changeRole(userId: string, role: UserRole) {
@@ -128,6 +150,7 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
       {/* Invite button */}
       <div className="flex justify-end">
         <button
+          type="button"
           onClick={() => setInviteOpen(true)}
           className="flex items-center gap-1.5 rounded-lg bg-[#333654] px-3 py-2 text-sm font-bold text-white hover:bg-[#444668] transition-colors"
         >
@@ -138,54 +161,88 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
       {/* Invite modal */}
       {inviteOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" dir="rtl">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setInviteOpen(false)} />
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={closeInvite} />
           <div className="relative w-full max-w-sm rounded-2xl bg-white shadow-2xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#FEF0EC]">
               <h2 className="font-black text-[#333654]">הזמנת משתמש חדש</h2>
-              <button onClick={() => setInviteOpen(false)} className="text-[#9091A8] hover:text-[#6B6D8A]"><X className="h-4 w-4" /></button>
+              <button type="button" onClick={closeInvite} className="text-[#9091A8] hover:text-[#6B6D8A]"><X className="h-4 w-4" /></button>
             </div>
-            <form onSubmit={handleInvite} className="flex flex-col gap-4 p-5">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#333654]">כתובת מייל *</label>
-                <div className="relative">
-                  <Mail className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9091A8]" />
+
+            {inviteLink ? (
+              <div className="flex flex-col gap-4 p-5">
+                <div className="flex flex-col gap-2 rounded-xl bg-[#E0F7F7] p-4">
+                  <div className="flex items-center gap-2 text-sm font-bold text-[#00B1AE]">
+                    <Link className="h-4 w-4 flex-shrink-0" />
+                    המשתמש נוצר בהצלחה
+                  </div>
+                  <p className="text-xs text-[#6B6D8A]">
+                    שלח את הקישור הבא למשתמש — הוא ישמש להגדרת הסיסמה:
+                  </p>
+                  <div className="rounded-lg bg-white border border-[#E5E5E8] p-2.5 text-xs text-[#333654] break-all font-mono" dir="ltr">
+                    {inviteLink}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={copyLink}
+                  className="flex items-center justify-center gap-2 rounded-lg bg-[#333654] py-2.5 text-sm font-bold text-white hover:bg-[#444668] transition-colors"
+                >
+                  {copied ? <><Check className="h-4 w-4" />הועתק!</> : <><Copy className="h-4 w-4" />העתק קישור</>}
+                </button>
+                <button type="button" onClick={closeInvite}
+                  className="rounded-lg border border-[#E5E5E8] py-2.5 text-sm font-semibold text-[#6B6D8A] hover:bg-[#F5F5F3]">
+                  סגור
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleInvite} className="flex flex-col gap-4 p-5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold text-[#333654]">כתובת מייל *</label>
+                  <div className="relative">
+                    <Mail className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9091A8]" />
+                    <input
+                      type="email" required dir="ltr"
+                      title="כתובת מייל"
+                      placeholder="name@gmail.com"
+                      value={inviteForm.email}
+                      onChange={(e) => setInviteForm(f => ({ ...f, email: e.target.value }))}
+                      className="w-full h-10 rounded-lg border border-[#E5E5E8] pr-9 pl-3 text-sm focus:border-[#00B1AE] focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold text-[#333654]">שם מלא</label>
                   <input
-                    type="email" required dir="ltr"
-                    value={inviteForm.email}
-                    onChange={(e) => setInviteForm(f => ({ ...f, email: e.target.value }))}
-                    className="w-full h-10 rounded-lg border border-[#E5E5E8] pr-9 pl-3 text-sm focus:border-[#00B1AE] focus:outline-none"
+                    title="שם מלא"
+                    placeholder="ישראל ישראלי"
+                    value={inviteForm.full_name}
+                    onChange={(e) => setInviteForm(f => ({ ...f, full_name: e.target.value }))}
+                    className="h-10 rounded-lg border border-[#E5E5E8] px-3 text-sm focus:border-[#00B1AE] focus:outline-none"
                   />
                 </div>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#333654]">שם מלא</label>
-                <input
-                  value={inviteForm.full_name}
-                  onChange={(e) => setInviteForm(f => ({ ...f, full_name: e.target.value }))}
-                  className="h-10 rounded-lg border border-[#E5E5E8] px-3 text-sm focus:border-[#00B1AE] focus:outline-none"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-semibold text-[#333654]">תפקיד</label>
-                <select
-                  value={inviteForm.role}
-                  onChange={(e) => setInviteForm(f => ({ ...f, role: e.target.value as UserRole }))}
-                  className="h-10 rounded-lg border border-[#E5E5E8] px-3 text-sm focus:border-[#00B1AE] focus:outline-none"
-                >
-                  {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
-                </select>
-              </div>
-              <div className="flex gap-3 pt-1">
-                <button type="button" onClick={() => setInviteOpen(false)}
-                  className="flex-1 rounded-lg border border-[#E5E5E8] py-2.5 text-sm font-semibold text-[#6B6D8A] hover:bg-[#F5F5F3]">
-                  ביטול
-                </button>
-                <button type="submit" disabled={inviteLoading}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-[#333654] py-2.5 text-sm font-bold text-white hover:bg-[#444668] disabled:opacity-60">
-                  {inviteLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'שלח הזמנה'}
-                </button>
-              </div>
-            </form>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-semibold text-[#333654]">תפקיד</label>
+                  <select
+                    title="תפקיד"
+                    value={inviteForm.role}
+                    onChange={(e) => setInviteForm(f => ({ ...f, role: e.target.value as UserRole }))}
+                    className="h-10 rounded-lg border border-[#E5E5E8] px-3 text-sm focus:border-[#00B1AE] focus:outline-none"
+                  >
+                    {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
+                  </select>
+                </div>
+                <div className="flex gap-3 pt-1">
+                  <button type="button" onClick={closeInvite}
+                    className="flex-1 rounded-lg border border-[#E5E5E8] py-2.5 text-sm font-semibold text-[#6B6D8A] hover:bg-[#F5F5F3]">
+                    ביטול
+                  </button>
+                  <button type="submit" disabled={inviteLoading}
+                    className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-[#333654] py-2.5 text-sm font-bold text-white hover:bg-[#444668] disabled:opacity-60">
+                    {inviteLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'שלח הזמנה'}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}
@@ -213,6 +270,7 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
               {/* Role selector */}
               <div className="relative">
                 <select
+                  title="תפקיד"
                   value={profile.role}
                   disabled={loadingId === profile.id}
                   onChange={(e) => changeRole(profile.id, e.target.value as UserRole)}
@@ -239,6 +297,8 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
                 >
                   {cu.camps?.name ?? 'קייטנה לא ידועה'}
                   <button
+                    type="button"
+                    title="הסר קייטנה"
                     onClick={() => removeCamp(profile.id, cu.camp_id)}
                     disabled={!!loadingId}
                     className="hover:text-red-500 transition-colors ml-0.5"
@@ -250,6 +310,7 @@ export function UsersTable({ profiles: initialProfiles, camps }: UsersTableProps
 
               {unassignedCamps.length > 0 && (
                 <select
+                  title="שיוך קייטנה"
                   value=""
                   onChange={(e) => { if (e.target.value) assignCamp(profile.id, e.target.value) }}
                   disabled={!!loadingId}
