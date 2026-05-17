@@ -146,6 +146,128 @@
     --sidebar-ring: #10b981;
 }
 
+/* ═══ Landing page ═══ */
+.lp-nav {
+  background: rgba(13, 15, 26, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+.lp-logo-box {
+  background: rgba(0, 177, 174, 0.1);
+  border: 1px solid rgba(0, 177, 174, 0.25);
+}
+.lp-hero {
+  min-height: 92vh;
+  background: linear-gradient(160deg, #0d0f1a 0%, #111322 40%, #0d1520 100%);
+}
+.lp-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.lp-glow-teal {
+  width: 700px; height: 700px; border-radius: 50%;
+  top: -10%; inset-inline-end: -5%;
+  background: radial-gradient(circle, rgba(0,177,174,0.12) 0%, transparent 60%);
+}
+.lp-glow-salmon {
+  width: 600px; height: 600px; border-radius: 50%;
+  bottom: -10%; inset-inline-start: -5%;
+  background: radial-gradient(circle, rgba(246,142,117,0.10) 0%, transparent 60%);
+}
+.lp-eyebrow-teal {
+  background: rgba(0,177,174,0.12);
+  border: 1px solid rgba(0,177,174,0.28);
+  color: #00b1ae;
+}
+.lp-eyebrow-yellow {
+  background: #fff8ec;
+  border: 1px solid rgba(248,173,29,0.25);
+  color: #b37c00;
+}
+.lp-eyebrow-salmon {
+  background: #fff0ec;
+  border: 1px solid rgba(246,142,117,0.25);
+  color: #c04a1e;
+}
+.lp-headline-gradient {
+  background: linear-gradient(90deg, #00b1ae 0%, #7dd6d4 50%, #f8ad1d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.lp-btn-teal {
+  background: linear-gradient(135deg, #00b1ae, #009e9b);
+  box-shadow: 0 8px 28px rgba(0,177,174,0.4);
+  color: #fff;
+}
+.lp-btn-teal:hover { opacity: 0.9; transform: translateY(-2px); }
+.lp-btn-outline {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.75);
+}
+.lp-btn-outline:hover { transform: translateY(-2px); }
+.lp-trust-chip {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.45);
+}
+.lp-nav-link {
+  color: rgba(255,255,255,0.55);
+  transition: color 0.15s, background 0.15s;
+}
+.lp-nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+/* Role card variants */
+.role-card-teal  { background: rgba(0,177,174,0.08);  border-color: rgba(0,177,174,0.2);  }
+.role-card-yellow{ background: rgba(248,173,29,0.08); border-color: rgba(248,173,29,0.2); }
+.role-card-salmon{ background: rgba(246,142,117,0.08);border-color: rgba(246,142,117,0.2);}
+.role-divider-teal  { background: rgba(0,177,174,0.2);  }
+.role-divider-yellow{ background: rgba(248,173,29,0.2); }
+.role-divider-salmon{ background: rgba(246,142,117,0.2);}
+/* Step icon variants */
+.step-teal   { background: linear-gradient(135deg,#00b1ae,#00b1aecc); box-shadow: 0 8px 24px rgba(0,177,174,0.4);  }
+.step-yellow { background: linear-gradient(135deg,#f8ad1d,#f8ad1dcc); box-shadow: 0 8px 24px rgba(248,173,29,0.4); }
+.step-salmon { background: linear-gradient(135deg,#f68e75,#f68e75cc); box-shadow: 0 8px 24px rgba(246,142,117,0.4);}
+/* Module accent bar */
+.bar-teal   { background: #00b1ae; }
+.bar-yellow { background: #f8ad1d; }
+.bar-salmon { background: #f68e75; }
+/* CTA section */
+.lp-cta-section {
+  background: linear-gradient(160deg, #0d0f1a 0%, #111322 50%, #0d1520 100%);
+}
+.lp-cta-glow {
+  background: radial-gradient(ellipse, rgba(0,177,174,0.1) 0%, transparent 65%);
+}
+.lp-btn-teal-lg {
+  background: linear-gradient(135deg, #00b1ae, #009e9b);
+  box-shadow: 0 12px 40px rgba(0,177,174,0.45);
+  color: #fff;
+}
+.lp-btn-teal-lg:hover { opacity: 0.9; transform: translateY(-2px); }
+.lp-btn-teal-sm {
+  background: linear-gradient(135deg, #00b1ae, #009e9b);
+  box-shadow: 0 0 20px rgba(0,177,174,0.35);
+  color: #fff;
+}
+.lp-btn-teal-sm:hover { opacity: 0.9; transform: translateY(-1px); }
+/* Section badge pills */
+.lp-modules-eyebrow { background: #f0fafa; border: 1px solid rgba(0,177,174,0.2); color: #00b1ae; }
+/* Role badge */
+.badge-teal   { background: #00b1ae; color: #fff; }
+.badge-yellow { background: #f8ad1d; color: #fff; }
+.badge-salmon { background: #f68e75; color: #fff; }
+/* Role dots */
+.dot-teal   { background: #00b1ae; }
+.dot-yellow { background: #f8ad1d; }
+.dot-salmon { background: #f68e75; }
+/* Flow connector */
+.lp-flow-connector {
+  background: linear-gradient(90deg, transparent, #e5e5e5 20%, #e5e5e5 80%, transparent);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
