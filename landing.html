@@ -3,360 +3,867 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>קייטנות רשת — מערכת ניהול</title>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <title>מערכת ניהול קייטנות — רשת אהלי יוסף יצחק</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Heebo',sans-serif;background:#f0eef8;color:#1a0a3c;min-height:100vh}
+    :root{
+      --teal:#00B1AE;
+      --teal-dark:#008a87;
+      --teal-light:#e6f7f7;
+      --salmon:#F68E75;
+      --yellow:#F8AD1D;
+      --navy:#333654;
+      --navy-deep:#1e2040;
+      --bg:#f5f8fa;
+      --white:#fff;
+      --gray:#6b7a8d;
+      --gray-light:#9aa5b4;
+      --border:#e2e8f0;
+      --green:#059669;
+      --green-bg:#d1fae5;
+      --amber:#d97706;
+      --amber-bg:#fef3c7;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;overflow-x:hidden}
 
-    /* HEADER */
-    header{
-      background:linear-gradient(135deg,#5b3aab 0%,#00b4cc 100%);
-      padding:40px 24px 60px;
+    /* ── NAV ── */
+    .topbar{
+      position:sticky;top:0;z-index:100;
+      background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:0 24px;
+    }
+    .topbar-inner{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .topbar-logo{display:flex;align-items:center;gap:10px}
+    .topbar-logo img{height:34px;object-fit:contain}
+    .topbar-logo-text{font-size:13px;font-weight:700;color:var(--navy)}
+    .topbar-logo-sub{font-size:11px;color:var(--gray);font-weight:500}
+    .topbar-btn{
+      display:inline-flex;align-items:center;gap:6px;
+      background:var(--teal);color:#fff;
+      padding:9px 20px;border-radius:99px;
+      font-size:13px;font-weight:800;text-decoration:none;
+      transition:all .2s;
+    }
+    .topbar-btn:hover{background:var(--teal-dark);transform:translateY(-1px)}
+
+    /* ── HERO ── */
+    .hero{
+      background:linear-gradient(150deg,var(--navy-deep) 0%,#2a3060 50%,#1a5f5e 100%);
+      padding:80px 24px 100px;
       text-align:center;
       position:relative;
       overflow:hidden;
     }
-    header::before{
+    .hero::before{
       content:'';position:absolute;inset:0;
-      background:radial-gradient(ellipse 80% 60% at 50% 120%,rgba(0,180,204,.25),transparent);
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 60%,rgba(0,177,174,.22),transparent),
+        radial-gradient(ellipse 60% 70% at 85% 10%,rgba(248,173,29,.12),transparent),
+        radial-gradient(ellipse 40% 40% at 50% 100%,rgba(246,142,117,.1),transparent);
     }
-    .logo-wrap{position:relative;display:inline-block;margin-bottom:20px}
-    .logo-wrap img{height:64px;object-fit:contain;filter:brightness(10) opacity(.95)}
-    header h1{font-size:32px;font-weight:900;color:#fff;letter-spacing:-.5px;position:relative}
-    header p{font-size:15px;color:rgba(255,255,255,.75);margin-top:8px;position:relative}
-
-    .badge-live{
-      display:inline-flex;align-items:center;gap:6px;
-      background:rgba(255,255,255,.15);backdrop-filter:blur(8px);
-      border:1px solid rgba(255,255,255,.25);
-      color:#fff;font-size:12px;font-weight:700;
-      padding:5px 14px;border-radius:99px;margin-top:16px;position:relative;
-    }
-    .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
-    /* MAIN */
-    main{max-width:820px;margin:0 auto;padding:32px 16px 60px}
-
-    /* CTA BUTTON */
-    .cta{
-      display:flex;gap:12px;justify-content:center;margin:-28px auto 36px;
-      flex-wrap:wrap;
-    }
-    .btn{
+    .hero-inner{position:relative;max-width:780px;margin:0 auto}
+    .hero-pill{
       display:inline-flex;align-items:center;gap:8px;
-      padding:13px 28px;border-radius:99px;font-size:14px;font-weight:800;
-      text-decoration:none;transition:all .2s;cursor:pointer;border:none;
+      background:rgba(0,177,174,.18);border:1px solid rgba(0,177,174,.35);
+      color:rgba(255,255,255,.9);font-size:12px;font-weight:700;
+      padding:6px 18px;border-radius:99px;margin-bottom:24px;
     }
-    .btn-primary{background:#5b3aab;color:#fff;box-shadow:0 4px 16px rgba(91,58,171,.35)}
-    .btn-primary:hover{background:#6b4ac0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(91,58,171,.45)}
-    .btn-outline{background:#fff;color:#5b3aab;border:2px solid #c4b5fd}
-    .btn-outline:hover{background:#f5f3ff;transform:translateY(-2px)}
+    .hero-pill-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite;flex-shrink:0}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .hero h1{
+      font-size:clamp(36px,6vw,62px);font-weight:900;color:#fff;
+      line-height:1.08;letter-spacing:-.8px;margin-bottom:20px;
+    }
+    .hero h1 em{
+      font-style:normal;
+      background:linear-gradient(90deg,var(--yellow),#ffa500);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .hero-lead{
+      font-size:17px;color:rgba(255,255,255,.72);line-height:1.7;
+      max-width:580px;margin:0 auto 36px;
+    }
+    .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:64px}
+    .btn-hero{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:15px 32px;border-radius:99px;font-size:15px;font-weight:800;
+      text-decoration:none;transition:all .22s;font-family:'Heebo',sans-serif;
+    }
+    .btn-hero-main{background:var(--teal);color:#fff;box-shadow:0 6px 28px rgba(0,177,174,.45)}
+    .btn-hero-main:hover{background:var(--teal-dark);transform:translateY(-2px);box-shadow:0 10px 36px rgba(0,177,174,.55)}
+    .btn-hero-ghost{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.25)}
+    .btn-hero-ghost:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
 
-    /* SECTION TITLE */
-    .section-title{
-      font-size:13px;font-weight:800;color:#9f8ec4;
-      text-transform:uppercase;letter-spacing:1.5px;
-      margin:40px 0 16px;border-bottom:1px solid #ddd8ee;padding-bottom:10px;
+    /* ── ROLE CHIPS ── */
+    .hero-roles{
+      display:inline-flex;flex-wrap:wrap;gap:10px;
+      justify-content:center;
+      background:rgba(255,255,255,.08);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;padding:20px 28px;
+      max-width:620px;margin:0 auto;
     }
+    .role-chip{
+      display:flex;align-items:center;gap:8px;
+      background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+      border-radius:12px;padding:10px 16px;
+    }
+    .role-chip-icon{font-size:20px}
+    .role-chip-text strong{display:block;font-size:13px;font-weight:800;color:#fff}
+    .role-chip-text span{font-size:11px;color:rgba(255,255,255,.6)}
 
-    /* FEATURE GRID */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:8px}
-    .feature{
-      background:#fff;border-radius:16px;border:1.5px solid #ede9fb;
-      padding:18px;display:flex;flex-direction:column;gap:6px;
-    }
-    .feature-icon{font-size:24px;margin-bottom:4px}
-    .feature-name{font-size:14px;font-weight:800;color:#1a0a3c}
-    .feature-desc{font-size:12px;color:#7c6a9e;line-height:1.5}
-    .feature-badge{
-      display:inline-flex;align-items:center;gap:4px;width:fit-content;
-      padding:2px 10px;border-radius:99px;font-size:10px;font-weight:700;margin-top:4px;
-    }
-    .done{background:#d1fae5;color:#065f46}
-    .pending{background:#fef3c7;color:#92400e}
-    .missing{background:#fee2e2;color:#991b1b}
+    /* ── DIVIDER ── */
+    .wave{display:block;width:100%;height:60px;margin-top:-2px}
 
-    /* TODO CARDS */
-    .todo-card{
-      background:#fff;border-radius:20px;border:2px solid #ede9fb;
-      padding:24px;margin-bottom:16px;
-    }
-    .todo-header{
-      display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;
-      border-bottom:1px solid #f0eef8;
-    }
-    .todo-icon{
-      width:48px;height:48px;border-radius:14px;
-      display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;
-    }
-    .todo-title{font-size:18px;font-weight:900;color:#1a0a3c}
-    .todo-sub{font-size:12px;color:#9f8ec4;margin-top:2px}
+    /* ── MAIN ── */
+    main{max-width:1060px;margin:0 auto;padding:64px 20px 100px}
+    section{margin-bottom:80px}
 
-    .steps{display:flex;flex-direction:column;gap:10px}
-    .step{
-      display:flex;align-items:flex-start;gap:12px;
-      background:#f8f7ff;border-radius:12px;padding:12px 14px;
+    .sec-label{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:11px;font-weight:800;color:var(--teal);
+      text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;
     }
-    .step-num{
-      width:26px;height:26px;border-radius:99px;
+    .sec-title{font-size:28px;font-weight:900;color:var(--navy);margin-bottom:8px;letter-spacing:-.3px}
+    .sec-sub{font-size:15px;color:var(--gray);margin-bottom:36px;line-height:1.65;max-width:580px}
+
+    /* ── STORY ── */
+    .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:640px){.story-grid{grid-template-columns:1fr}}
+    .story-card{
+      background:var(--white);border-radius:20px;border:1.5px solid var(--border);
+      padding:28px;position:relative;overflow:hidden;
+    }
+    .story-card::before{
+      content:'';position:absolute;top:0;inset-inline-start:0;
+      width:4px;height:100%;border-radius:0 4px 4px 0;
+    }
+    .story-card.teal::before{background:var(--teal)}
+    .story-card.yellow::before{background:var(--yellow)}
+    .story-card.salmon::before{background:var(--salmon)}
+    .story-card.navy::before{background:var(--navy)}
+    .story-icon{font-size:32px;margin-bottom:14px;display:block}
+    .story-card h3{font-size:17px;font-weight:900;color:var(--navy);margin-bottom:8px}
+    .story-card p{font-size:13.5px;color:var(--gray);line-height:1.65}
+
+    /* ── MODULES ── */
+    .modules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+    .module{
+      background:var(--white);border-radius:18px;border:1.5px solid var(--border);
+      padding:22px 20px;display:flex;flex-direction:column;gap:6px;
+      transition:all .22s;cursor:default;
+    }
+    .module:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,177,174,.12)}
+    .module-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+    .module-icon{
+      width:46px;height:46px;border-radius:14px;
       display:flex;align-items:center;justify-content:center;
-      font-size:11px;font-weight:900;flex-shrink:0;margin-top:1px;
+      font-size:22px;flex-shrink:0;
     }
-    .step-num.red{background:#fee2e2;color:#dc2626}
-    .step-num.yellow{background:#fef3c7;color:#d97706}
-    .step-num.green{background:#d1fae5;color:#059669}
-    .step-body{flex:1}
-    .step-title{font-size:13px;font-weight:800;color:#1a0a3c;margin-bottom:2px}
-    .step-desc{font-size:12px;color:#7c6a9e;line-height:1.5}
-    .step-code{
-      display:block;margin-top:6px;background:#1a0a3c;color:#a5f3fc;
-      font-family:monospace;font-size:11px;padding:6px 10px;border-radius:8px;
-      word-break:break-all;line-height:1.6;
+    .mi-teal{background:#e6f7f7}
+    .mi-yellow{background:#fef9e6}
+    .mi-salmon{background:#fef1ee}
+    .mi-navy{background:#eef0f8}
+    .mi-green{background:#f0fdf4}
+    .mi-purple{background:#f5f3ff}
+    .badge-live{
+      display:inline-flex;align-items:center;gap:4px;
+      padding:3px 10px;border-radius:99px;
+      font-size:10px;font-weight:700;
+      background:var(--green-bg);color:var(--green);
     }
-    .step-link{color:#5b3aab;font-weight:700;font-size:12px;text-decoration:none}
-    .step-link:hover{text-decoration:underline}
+    .badge-soon{
+      display:inline-flex;align-items:center;gap:4px;
+      padding:3px 10px;border-radius:99px;
+      font-size:10px;font-weight:700;
+      background:var(--amber-bg);color:var(--amber);
+    }
+    .module-name{font-size:14px;font-weight:800;color:var(--navy)}
+    .module-desc{font-size:12px;color:var(--gray);line-height:1.55}
+    .module-details{
+      margin-top:8px;padding-top:10px;border-top:1px solid var(--border);
+      display:flex;flex-direction:column;gap:4px;
+    }
+    .module-detail{font-size:11.5px;color:var(--gray);display:flex;align-items:flex-start;gap:6px}
+    .module-detail::before{content:'›';color:var(--teal);font-weight:900;margin-top:1px;flex-shrink:0}
 
-    /* TECH STACK */
-    .stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-    .stack-item{
-      background:#fff;border:1.5px solid #ede9fb;border-radius:10px;
-      padding:6px 14px;font-size:12px;font-weight:700;color:#5b3aab;
+    /* ── FLOW ── */
+    .flow-wrap{
+      background:var(--white);border-radius:24px;border:1.5px solid var(--border);
+      padding:36px;
+    }
+    .flow-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0;position:relative}
+    .flow-step{padding:20px 16px;position:relative;text-align:center}
+    .flow-step:not(:last-child)::after{
+      content:'←';
+      position:absolute;top:50%;inset-inline-start:100%;transform:translate(-50%,-50%);
+      font-size:20px;color:var(--border);font-weight:900;
+      display:none;
+    }
+    .flow-num{
+      width:44px;height:44px;border-radius:14px;
+      background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+      color:#fff;font-size:18px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 12px;
+    }
+    .flow-step-icon{font-size:24px;margin-bottom:6px}
+    .flow-step h4{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:4px}
+    .flow-step p{font-size:11.5px;color:var(--gray);line-height:1.5}
+    .flow-connector{
+      display:flex;align-items:center;justify-content:center;
+      padding:0 4px;align-self:center;font-size:22px;color:var(--border);
     }
 
-    /* FOOTER */
-    footer{text-align:center;padding:24px;font-size:12px;color:#b8aed0}
+    /* ── ROLES ── */
+    .roles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+    .role-card{
+      background:var(--white);border-radius:20px;border:1.5px solid var(--border);
+      padding:28px;position:relative;overflow:hidden;
+    }
+    .role-card-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+    .role-icon{
+      width:52px;height:52px;border-radius:16px;
+      display:flex;align-items:center;justify-content:center;font-size:24px;
+      flex-shrink:0;
+    }
+    .ri-teal{background:var(--teal-light)}
+    .ri-navy{background:#eef0f8}
+    .ri-yellow{background:#fef9e6}
+    .role-name{font-size:18px;font-weight:900;color:var(--navy)}
+    .role-tagline{font-size:12px;color:var(--gray);margin-top:2px}
+    .role-body{font-size:13px;color:var(--gray);line-height:1.65;margin-bottom:16px}
+    .role-perms{display:flex;flex-direction:column;gap:6px}
+    .perm{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--navy)}
+    .perm-check{
+      width:18px;height:18px;border-radius:6px;background:var(--green-bg);
+      display:flex;align-items:center;justify-content:center;
+      font-size:10px;color:var(--green);flex-shrink:0;margin-top:1px;font-weight:900;
+    }
+    .role-highlight{
+      margin-top:18px;padding:12px 16px;border-radius:12px;
+      font-size:12px;font-weight:700;
+    }
+    .rh-teal{background:var(--teal-light);color:var(--teal-dark)}
+    .rh-navy{background:#eef0f8;color:var(--navy)}
+    .rh-yellow{background:#fef9e6;color:#92660a}
+
+    /* ── HOW TO LOGIN ── */
+    .login-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+    .login-step{
+      background:var(--white);border-radius:18px;border:1.5px solid var(--border);
+      padding:24px 20px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+    }
+    .login-step-num{
+      width:36px;height:36px;border-radius:12px;
+      background:linear-gradient(135deg,var(--teal),#00878a);
+      color:#fff;font-size:15px;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .login-step h4{font-size:14px;font-weight:800;color:var(--navy)}
+    .login-step p{font-size:12.5px;color:var(--gray);line-height:1.6}
+
+    /* ── HIGHLIGHTS BAR ── */
+    .highlights{
+      background:linear-gradient(135deg,var(--navy) 0%,#1a5f5e 100%);
+      border-radius:24px;padding:40px;
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:24px;
+    }
+    .hl{text-align:center}
+    .hl-icon{font-size:32px;margin-bottom:10px;display:block}
+    .hl-text{font-size:14px;font-weight:800;color:rgba(255,255,255,.9);line-height:1.4}
+    .hl-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+
+    /* ── CTA BOTTOM ── */
+    .cta-bottom{
+      background:linear-gradient(135deg,var(--teal) 0%,var(--teal-dark) 100%);
+      border-radius:28px;padding:56px 40px;text-align:center;
+    }
+    .cta-bottom h2{font-size:28px;font-weight:900;color:#fff;margin-bottom:10px}
+    .cta-bottom p{font-size:15px;color:rgba(255,255,255,.78);margin-bottom:32px;line-height:1.6}
+    .btn-cta{
+      display:inline-flex;align-items:center;gap:8px;
+      background:#fff;color:var(--teal-dark);
+      padding:16px 36px;border-radius:99px;
+      font-size:15px;font-weight:900;text-decoration:none;
+      box-shadow:0 8px 32px rgba(0,0,0,.2);
+      transition:all .22s;
+    }
+    .btn-cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.28)}
+
+    /* ── FOOTER ── */
+    footer{
+      text-align:center;padding:36px 24px;
+      border-top:1px solid var(--border);background:var(--white);
+    }
+    .footer-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+    .footer-logo img{height:28px;opacity:.5}
+    footer p{font-size:12px;color:var(--gray-light);line-height:1.8}
+
+    @media(max-width:600px){
+      .hero h1{font-size:34px}
+      .hero-roles{padding:16px 14px;gap:8px}
+      .role-chip{padding:8px 12px}
+      .highlights{grid-template-columns:1fr 1fr}
+      .cta-bottom{padding:36px 24px}
+      .flow-steps{grid-template-columns:1fr 1fr}
+    }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo-wrap">
-    <img src="https://chabad-kaitanot-d2em.vercel.app/logo-chabad.png" alt="רשת חינוך חב״ד"/>
+<!-- ── NAV ── -->
+<nav class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-logo">
+      <img src="public/logo-chabad.png" alt="חב&quot;ד" onerror="this.style.display='none'"/>
+      <div>
+        <div class="topbar-logo-text">רשת אהלי יוסף יצחק</div>
+        <div class="topbar-logo-sub">מערכת ניהול קייטנות</div>
+      </div>
+    </div>
+    <a class="topbar-btn" href="https://chabad-kaitanot.vercel.app/login">כניסה למערכת ←</a>
   </div>
-  <h1>מערכת ניהול קייטנות</h1>
-  <p>רשת שלוחי חב"ד — ניהול נרשמים, כספים, צוות ומסמכים</p>
-  <div class="badge-live"><span class="dot"></span> פרוס ב-Vercel</div>
-</header>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-pill">
+      <span class="hero-pill-dot"></span>
+      מערכת פעילה · תשפ"ו
+    </div>
+    <h1>כל קייטנה —<br/>ניהול <em>אחד</em>, ברמה <em>אחרת</em></h1>
+    <p class="hero-lead">
+      מערכת הניהול של רשת אהלי יוסף יצחק נבנתה ייעודית לשלוחי חינוך —
+      מרישום הילד הראשון ועד לדוח הכספי השנתי, הכל במקום אחד, בעברית מלאה, מכל מכשיר.
+    </p>
+    <div class="hero-cta">
+      <a class="btn-hero btn-hero-main" href="https://chabad-kaitanot.vercel.app/login">
+        🚀 כנסו למערכת
+      </a>
+      <a class="btn-hero btn-hero-ghost" href="#features">
+        גלו מה כולל המערכת ↓
+      </a>
+    </div>
+
+    <div class="hero-roles">
+      <div class="role-chip">
+        <span class="role-chip-icon">🏕️</span>
+        <div class="role-chip-text">
+          <strong>שליח / מנהל קייטנה</strong>
+          <span>מנהל את הקייטנה שלו</span>
+        </div>
+      </div>
+      <div class="role-chip">
+        <span class="role-chip-icon">🌐</span>
+        <div class="role-chip-text">
+          <strong>מנהל רשת</strong>
+          <span>רואה את כל הקייטנות</span>
+        </div>
+      </div>
+      <div class="role-chip">
+        <span class="role-chip-icon">⚙️</span>
+        <div class="role-chip-text">
+          <strong>אדמין מערכת</strong>
+          <span>גישה מלאה</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <main>
 
-  <div class="cta">
-    <a class="btn btn-primary" href="https://chabad-kaitanot-d2em.vercel.app" target="_blank">🚀 כנסי למערכת</a>
-    <a class="btn btn-outline" href="https://github.com/sarahager1-png/chabad-kaitanot" target="_blank">⌥ GitHub</a>
-  </div>
+  <!-- ── STORY ── -->
+  <section>
+    <div class="sec-label">🎯 למה נבנתה המערכת</div>
+    <div class="sec-title">אחת המשימות הכי מורכבות — פשוטה סוף סוף</div>
+    <div class="sec-sub">ניהול קייטנה חב"ד זה הרבה יותר מלוח שנה ורשימת ילדים. זה עשרות תהליכים שצריכים לעבוד ביחד.</div>
 
-  <!-- FEATURES -->
-  <div class="section-title">✅ פיצ׳רים קיימים במערכת</div>
-  <div class="grid">
-    <div class="feature">
-      <div class="feature-icon">👨‍👩‍👧</div>
-      <div class="feature-name">ניהול נרשמים</div>
-      <div class="feature-desc">הוספה, עריכה, סינון, ייצוא Excel/PDF</div>
-      <span class="feature-badge done">✓ פעיל</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">💰</div>
-      <div class="feature-name">כספים</div>
-      <div class="feature-desc">הכנסות, הוצאות, תקציב, גרפים</div>
-      <span class="feature-badge done">✓ פעיל</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">👥</div>
-      <div class="feature-name">ניהול צוות</div>
-      <div class="feature-desc">עובדים, שכר, תאריכים, תפקידים</div>
-      <span class="feature-badge done">✓ פעיל</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📄</div>
-      <div class="feature-name">מסמכים</div>
-      <div class="feature-desc">העלאת קבצים לאחסון Supabase</div>
-      <span class="feature-badge done">✓ פעיל</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📅</div>
-      <div class="feature-name">תכנון</div>
-      <div class="feature-desc">יומן פעילויות לפי קייטנה</div>
-      <span class="feature-badge done">✓ פעיל</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🔔</div>
-      <div class="feature-name">התראות</div>
-      <div class="feature-desc">התראות אוטומטיות על אירועים</div>
-      <span class="feature-badge done">✓ פעיל</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🛒</div>
-      <div class="feature-name">שירותי רשת</div>
-      <div class="feature-desc">הזמנת ציוד וחומרים מהרשת</div>
-      <span class="feature-badge done">✓ פעיל</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📋</div>
-      <div class="feature-name">שכפול קייטנה</div>
-      <div class="feature-desc">העתקה לשנת לימודים הבאה</div>
-      <span class="feature-badge done">✓ פעיל</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">💬</div>
-      <div class="feature-name">WhatsApp</div>
-      <div class="feature-desc">שליחת הודעות להורים בלחיצה</div>
-      <span class="feature-badge pending">⚙️ ממתין להגדרה</span>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">💳</div>
-      <div class="feature-name">תשלום מקוון</div>
-      <div class="feature-desc">Cardcom · קישור תשלום להורים</div>
-      <span class="feature-badge pending">⚙️ ממתין להגדרה</span>
-    </div>
-  </div>
-
-  <!-- WHATSAPP TODO -->
-  <div class="section-title">💬 מה נדרש להפעלת WhatsApp</div>
-  <div class="todo-card">
-    <div class="todo-header">
-      <div class="todo-icon" style="background:#dcfce7">💬</div>
-      <div>
-        <div class="todo-title">WhatsApp Business API</div>
-        <div class="todo-sub">Meta Cloud API · שליחת הודעות להורים ישירות מהמערכת</div>
+    <div class="story-grid">
+      <div class="story-card teal">
+        <span class="story-icon">📋</span>
+        <h3>רישום הורים — בלחיצה</h3>
+        <p>הורים מקבלים קישור וממלאים טופס רישום דיגיטלי מהנייד. הפרטים מגיעים ישירות לשולחן השליח — ללא מיילים, ללא גיליונות אקסל ידניים.</p>
+      </div>
+      <div class="story-card yellow">
+        <span class="story-icon">💰</span>
+        <h3>כספים שקופים ומסודרים</h3>
+        <p>כל שקל נכנס ויוצא מתועד. גרפים בזמן אמת, השוואה ליעד התקציבי, דוחות לייצוא לאקסל. מנהל הרשת רואה תמונה מאוחדת של כל הקייטנות.</p>
+      </div>
+      <div class="story-card salmon">
+        <span class="story-icon">📄</span>
+        <h3>הסכמים וחוזים דיגיטליים</h3>
+        <p>הסכמי הפעלה וחוזי עבודה נחתמים דיגיטלית — חתימת השליח ישירות על המסך, חתימת הרב מוכנה מראש. ללא נסיעות, ללא דואר.</p>
+      </div>
+      <div class="story-card navy">
+        <span class="story-icon">👥</span>
+        <h3>צוות ושכר בלחיצה</h3>
+        <p>ניהול כל אנשי הצוות, חישוב שכר, מעקב נוכחות. כל עובד עם תפקידו, שכרו ותאריכי העסקתו — מסודר, מדויק, זמין.</p>
       </div>
     </div>
-    <div class="steps">
+  </section>
 
-      <div class="step">
-        <div class="step-num red">1</div>
-        <div class="step-body">
-          <div class="step-title">פתיחת חשבון Meta Business</div>
-          <div class="step-desc">נדרש חשבון Meta Business Manager. אם אין — פותחים ב:
-            <a class="step-link" href="https://business.facebook.com" target="_blank">business.facebook.com</a>
+  <!-- ── MODULES ── -->
+  <section id="features">
+    <div class="sec-label">📦 מה כלול במערכת</div>
+    <div class="sec-title">15 מודולים פעילים</div>
+    <div class="sec-sub">כל מה שצריך לניהול קייטנה מלאה — מהרישום הראשון ועד לדוח הסיום.</div>
+
+    <div class="modules-grid">
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-teal">👨‍👩‍👧</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">ניהול נרשמים</div>
+        <div class="module-desc">כרטיס מלא לכל ילד עם כל הפרטים</div>
+        <div class="module-details">
+          <div class="module-detail">רישום מקוון להורים (ללא חשבון)</div>
+          <div class="module-detail">סינון לפי קבוצה, תשלום, גיל, מגדר</div>
+          <div class="module-detail">ייצוא לאקסל ולהדפסה</div>
+          <div class="module-detail">ניהול רשימת המתנה</div>
+          <div class="module-detail">מידע רפואי ואלרגיות</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-yellow">🏕️</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">ניהול קייטנות</div>
+        <div class="module-desc">פתיחה וניהול של כמה קייטנות במקביל</div>
+        <div class="module-details">
+          <div class="module-detail">פרטי קייטנה — כתובת, לוח זמנים, יעד</div>
+          <div class="module-detail">מסלולים (tracks) לקבוצות שונות</div>
+          <div class="module-detail">צ'קליסט הכנה לשליח מתחיל</div>
+          <div class="module-detail">שכפול קייטנה לשנה הבאה</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-teal">💰</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">כספים ותקציב</div>
+        <div class="module-desc">מעקב הכנסות והוצאות בזמן אמת</div>
+        <div class="module-details">
+          <div class="module-detail">קטגוריות הוצאה מוגדרות מראש</div>
+          <div class="module-detail">גרפים חודשיים ופילוח לפי קטגוריה</div>
+          <div class="module-detail">תקציב מאושר מול ביצוע בפועל</div>
+          <div class="module-detail">ייצוא דוח כספי מלא לאקסל</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-salmon">📊</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">סימולציות תקציב</div>
+        <div class="module-desc">תכנן לפני שמתחייב</div>
+        <div class="module-details">
+          <div class="module-detail">בניית תרחישים — אופטימי / פסימי</div>
+          <div class="module-detail">חישוב רווח / הפסד אוטומטי</div>
+          <div class="module-detail">עלות לחניך לפי מספר רשומים</div>
+          <div class="module-detail">השוואת תרחישים</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-navy">👥</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">ניהול צוות</div>
+        <div class="module-desc">כל העובדים במקום אחד</div>
+        <div class="module-details">
+          <div class="module-detail">תפקיד, שעות, שכר לכל עובד</div>
+          <div class="module-detail">תאריכי העסקה ופרטי קשר</div>
+          <div class="module-detail">ייצוא רשימת צוות</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-yellow">💵</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">שכר עובדים</div>
+        <div class="module-desc">חישוב שכר מדויק ומהיר</div>
+        <div class="module-details">
+          <div class="module-detail">חישוב שכר לפי שעות / יומי / גלובלי</div>
+          <div class="module-detail">מעקב תשלומים</div>
+          <div class="module-detail">תלושי שכר להדפסה</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-teal">✅</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">נוכחות</div>
+        <div class="module-desc">רישום נוכחות יומי מהיר</div>
+        <div class="module-details">
+          <div class="module-detail">סימון נוכח/נעדר לכל ילד</div>
+          <div class="module-detail">מעקב חיסורים לאורך זמן</div>
+          <div class="module-detail">דוח נוכחות ליום</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-purple">📅</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">תכנון פעילויות</div>
+        <div class="module-desc">לוח שנה מלא לימי הקייטנה</div>
+        <div class="module-details">
+          <div class="module-detail">פעילויות לפי יום ולפי מסלול</div>
+          <div class="module-detail">שיוך ספקים ומדריכים</div>
+          <div class="module-detail">תצוגת לוח או רשימה</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-salmon">🚌</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">ניהול טיולים</div>
+        <div class="module-desc">ארגון טיולים עם אישורי הורים</div>
+        <div class="module-details">
+          <div class="module-detail">פרטי יעד, תאריך, עלות</div>
+          <div class="module-detail">קישור לאישור הורים דיגיטלי</div>
+          <div class="module-detail">מעקב אישורים שהתקבלו</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-navy">📄</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">מסמכים</div>
+        <div class="module-desc">כל מסמכי הקייטנה במקום אחד</div>
+        <div class="module-details">
+          <div class="module-detail">העלאת קבצים (PDF, תמונות)</div>
+          <div class="module-detail">אחסון מאובטח ב-Supabase Storage</div>
+          <div class="module-detail">שיתוף מסמכים עם הצוות</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-teal">📋</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">הסכמים וחוזים</div>
+        <div class="module-desc">חתימה דיגיטלית על המסמכים הרשמיים</div>
+        <div class="module-details">
+          <div class="module-detail">הסכם הפעלה עם חתימת שליח</div>
+          <div class="module-detail">חוזה עבודה ישיר עם חתימה</div>
+          <div class="module-detail">חתימת הרב מוכנה מראש</div>
+          <div class="module-detail">שמירה ב-PDF להדפסה</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-yellow">🎫</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">שוברים</div>
+        <div class="module-desc">הנפקת שוברי השתתפות</div>
+        <div class="module-details">
+          <div class="module-detail">שוברים לסדנאות, אירועים ועוד</div>
+          <div class="module-detail">הדפסה לפי מספר חניכים</div>
+          <div class="module-detail">סוגי שוברים הניתנים להגדרה</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-green">🛒</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">שירותי רשת</div>
+        <div class="module-desc">הזמנת ציוד וחומרים מהרשת</div>
+        <div class="module-details">
+          <div class="module-detail">קטלוג שירותים ומוצרים</div>
+          <div class="module-detail">הגשת בקשה ומעקב סטטוס</div>
+          <div class="module-detail">אישור על ידי מנהל הרשת</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-salmon">🔔</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">התראות</div>
+        <div class="module-desc">לא להחמיץ שום דבר חשוב</div>
+        <div class="module-details">
+          <div class="module-detail">נרשמים חדשים ממתינים לאישור</div>
+          <div class="module-detail">תשלומים שלא הגיעו</div>
+          <div class="module-detail">מסמכים חסרים</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-navy">📝</div>
+          <span class="badge-live">✓ פעיל</span>
+        </div>
+        <div class="module-name">טפסים ובקשות</div>
+        <div class="module-desc">תקשורת מסודרת עם הרשת</div>
+        <div class="module-details">
+          <div class="module-detail">הגשת בקשות לרשת</div>
+          <div class="module-detail">מעקב סטטוס בקשות</div>
+          <div class="module-detail">תיעוד מלא של כל פנייה</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-green">💬</div>
+          <span class="badge-soon">⚙ בקרוב</span>
+        </div>
+        <div class="module-name">WhatsApp</div>
+        <div class="module-desc">שליחת הודעות להורים מהמערכת</div>
+        <div class="module-details">
+          <div class="module-detail">הודעה לנרשם בודד או לכולם</div>
+          <div class="module-detail">תבניות מוכנות מראש</div>
+          <div class="module-detail">ממתין להגדרת Meta Business</div>
+        </div>
+      </div>
+
+      <div class="module">
+        <div class="module-top">
+          <div class="module-icon mi-teal">💳</div>
+          <span class="badge-soon">⚙ בקרוב</span>
+        </div>
+        <div class="module-name">תשלום מקוון</div>
+        <div class="module-desc">קישור תשלום דרך Cardcom</div>
+        <div class="module-details">
+          <div class="module-detail">שליחת קישור תשלום להורה</div>
+          <div class="module-detail">עדכון סטטוס תשלום אוטומטי</div>
+          <div class="module-detail">ממתין לחשבון Cardcom</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FLOW ── -->
+  <section>
+    <div class="sec-label">🔄 תהליך עבודה</div>
+    <div class="sec-title">מרישום ראשון עד סיום קייטנה</div>
+    <div class="sec-sub">שישה שלבים שמכסים את כל מחזור חיי הקייטנה.</div>
+
+    <div class="flow-wrap">
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-step-icon">📱</div>
+          <h4>הורה נרשם</h4>
+          <p>קישור ציבורי, ללא חשבון. מילוי פרטי הילד מהנייד</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-step-icon">🔔</div>
+          <h4>התראה לשליח</h4>
+          <p>נרשם חדש מופיע בלוח. אישור, דחייה, או העברה לרשימת המתנה</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-step-icon">💳</div>
+          <h4>שליחת קישור תשלום</h4>
+          <p>קישור Cardcom נשלח להורה. סטטוס תשלום מתעדכן אוטומטית</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-step-icon">🏕️</div>
+          <h4>ניהול שוטף</h4>
+          <p>נוכחות יומית, פעילויות, תקשורת WhatsApp עם הורים</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div class="flow-step-icon">💰</div>
+          <h4>מעקב כספי</h4>
+          <p>כל הוצאה ושכר עובד מתועד. גרפים בזמן אמת מול יעד</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">6</div>
+          <div class="flow-step-icon">📊</div>
+          <h4>דוח סיום</h4>
+          <p>ייצוא Excel מלא. שכפול הקייטנה לשנה הבאה בלחיצה אחת</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ROLES ── -->
+  <section>
+    <div class="sec-label">🔐 מי יכול לעשות מה</div>
+    <div class="sec-title">שלוש רמות הרשאה ברורות</div>
+    <div class="sec-sub">כל משתמש רואה ועושה רק מה שמותר לו — מוגדר בצורה מאובטחת ברמת מסד הנתונים.</div>
+
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-card-head">
+          <div class="role-icon ri-teal">🏕️</div>
+          <div>
+            <div class="role-name">שליח / מנהל קייטנה</div>
+            <div class="role-tagline">ראש הקייטנה בשטח</div>
           </div>
         </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num red">2</div>
-        <div class="step-body">
-          <div class="step-title">הוספת מספר טלפון לWhatsApp Business</div>
-          <div class="step-desc">ב-Meta Developer Console → יצירת App → WhatsApp → הוספת מספר טלפון ייעודי (לא מספר אישי!). מספר ה-ID שמתקבל זה <strong>WHATSAPP_PHONE_ID</strong></div>
+        <div class="role-body">
+          מנהל את הקייטנה שלו בלבד — לא רואה קייטנות אחרות. כל הכלים שצריך לנהל את שנת הקייטנה מהרישום הראשון ועד הסיום.
         </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num red">3</div>
-        <div class="step-body">
-          <div class="step-title">קבלת Access Token</div>
-          <div class="step-desc">ב-Meta App Dashboard → System Users → Generate Token. זהו <strong>WHATSAPP_TOKEN</strong></div>
+        <div class="role-perms">
+          <div class="perm"><span class="perm-check">✓</span>נרשמים, נוכחות, קבוצות</div>
+          <div class="perm"><span class="perm-check">✓</span>הכנסות, הוצאות, שכר צוות</div>
+          <div class="perm"><span class="perm-check">✓</span>תכנון פעילויות וטיולים</div>
+          <div class="perm"><span class="perm-check">✓</span>מסמכים, הסכמים, שוברים</div>
+          <div class="perm"><span class="perm-check">✓</span>שירותי רשת ובקשות</div>
         </div>
+        <div class="role-highlight rh-teal">מתאים לכל שליח שמנהל קייטנה</div>
       </div>
 
-      <div class="step">
-        <div class="step-num yellow">4</div>
-        <div class="step-body">
-          <div class="step-title">הוספת משתני סביבה ב-Vercel</div>
-          <div class="step-desc">ב-Vercel → Settings → Environment Variables, להוסיף:</div>
-          <code class="step-code">WHATSAPP_TOKEN=EAAxxxxx...
-WHATSAPP_PHONE_ID=123456789</code>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num yellow">5</div>
-        <div class="step-body">
-          <div class="step-title">רישום Webhook ב-Meta</div>
-          <div class="step-desc">ב-Meta App → Webhooks, להגדיר URL:</div>
-          <code class="step-code">https://chabad-kaitanot-d2em.vercel.app/api/whatsapp</code>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num green">6</div>
-        <div class="step-body">
-          <div class="step-title">✓ הקוד כבר מוכן במערכת</div>
-          <div class="step-desc">API route קיים ב-<code>/api/whatsapp</code> · כפתור "שלח WhatsApp" קיים במסך הנרשמים</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- CARDCOM TODO -->
-  <div class="section-title">💳 מה נדרש להפעלת מערכת סליקה (Cardcom)</div>
-  <div class="todo-card">
-    <div class="todo-header">
-      <div class="todo-icon" style="background:#ede9fb">💳</div>
-      <div>
-        <div class="todo-title">Cardcom — סליקת אשראי ישראלית</div>
-        <div class="todo-sub">שליחת קישור תשלום להורים · עדכון אוטומטי של סטטוס תשלום</div>
-      </div>
-    </div>
-    <div class="steps">
-
-      <div class="step">
-        <div class="step-num red">1</div>
-        <div class="step-body">
-          <div class="step-title">פתיחת חשבון סוחר ב-Cardcom</div>
-          <div class="step-desc">
-            פנו ל-Cardcom בטלפון <strong>03-7219966</strong> או ב-<a class="step-link" href="https://www.cardcom.solutions" target="_blank">cardcom.solutions</a> לפתיחת חשבון עסקי עבור הרשת
+      <div class="role-card">
+        <div class="role-card-head">
+          <div class="role-icon ri-navy">🌐</div>
+          <div>
+            <div class="role-name">מנהל רשת</div>
+            <div class="role-tagline">מפקח על כלל הרשת</div>
           </div>
         </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num red">2</div>
-        <div class="step-body">
-          <div class="step-title">קבלת פרטי API</div>
-          <div class="step-desc">לאחר אישור החשבון, Cardcom שולחים:</div>
-          <code class="step-code">Terminal ID   → CARDCOM_TERMINAL
-API Name      → CARDCOM_API_NAME
-API Password  → CARDCOM_API_PASSWORD</code>
+        <div class="role-body">
+          רואה את כל הקייטנות ברשת — נתונים מאוחדים, השוואות בין קייטנות, אישור בקשות ושירותים. מתאים לצוות ההנהלה.
         </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num yellow">3</div>
-        <div class="step-body">
-          <div class="step-title">הוספת משתני סביבה ב-Vercel</div>
-          <div class="step-desc">ב-Vercel → Settings → Environment Variables, להוסיף את 3 הפרטים שקיבלתם מ-Cardcom</div>
+        <div class="role-perms">
+          <div class="perm"><span class="perm-check">✓</span>כל מה שיש לשליח + ראייה רשתית</div>
+          <div class="perm"><span class="perm-check">✓</span>דוחות מאוחדים של כל הקייטנות</div>
+          <div class="perm"><span class="perm-check">✓</span>אישור בקשות ושירותי רשת</div>
+          <div class="perm"><span class="perm-check">✓</span>תקציב רשת מלא</div>
+          <div class="perm"><span class="perm-check">✓</span>ניהול הסכמים וחוזים</div>
         </div>
+        <div class="role-highlight rh-navy">מתאים להנהלת הרשת ומפקחים</div>
       </div>
 
-      <div class="step">
-        <div class="step-num yellow">4</div>
-        <div class="step-body">
-          <div class="step-title">הגדרת Webhook ב-Cardcom</div>
-          <div class="step-desc">בחשבון Cardcom → הגדרות → Webhook URL:</div>
-          <code class="step-code">https://chabad-kaitanot-d2em.vercel.app/api/payments/webhook</code>
+      <div class="role-card">
+        <div class="role-card-head">
+          <div class="role-icon ri-yellow">⚙️</div>
+          <div>
+            <div class="role-name">אדמין מערכת</div>
+            <div class="role-tagline">שליטה מלאה</div>
+          </div>
         </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num green">5</div>
-        <div class="step-body">
-          <div class="step-title">✓ הקוד כבר מוכן במערכת</div>
-          <div class="step-desc">יצירת קישור תשלום ב-<code>/api/payments/cardcom</code> · קבלת webhook ב-<code>/api/payments/webhook</code> · עמוד הצלחה/שגיאה להורה · עדכון אוטומטי של סטטוס תשלום בנרשם</div>
+        <div class="role-body">
+          גישה לכל המערכת ללא הגבלה — ניהול משתמשים, הגדרות מערכת, פתיחת קייטנות חדשות, עדכון הגדרות. מיועד לצוות הטכני של הרשת.
         </div>
+        <div class="role-perms">
+          <div class="perm"><span class="perm-check">✓</span>כל ההרשאות של מנהל רשת</div>
+          <div class="perm"><span class="perm-check">✓</span>ניהול משתמשים ורמות גישה</div>
+          <div class="perm"><span class="perm-check">✓</span>הגדרות מערכת ותצורה</div>
+          <div class="perm"><span class="perm-check">✓</span>פתיחת קייטנות וסגירתן</div>
+          <div class="perm"><span class="perm-check">✓</span>לוח ניהול מלא</div>
+        </div>
+        <div class="role-highlight rh-yellow">מיועד לצוות הטכני של הרשת בלבד</div>
       </div>
-
     </div>
-  </div>
+  </section>
 
-  <!-- TECH STACK -->
-  <div class="section-title">🛠️ טכנולוגיות</div>
-  <div class="stack">
-    <span class="stack-item">Next.js 16</span>
-    <span class="stack-item">TypeScript</span>
-    <span class="stack-item">Supabase</span>
-    <span class="stack-item">Tailwind CSS</span>
-    <span class="stack-item">Vercel</span>
-    <span class="stack-item">Cardcom API</span>
-    <span class="stack-item">WhatsApp Cloud API</span>
-    <span class="stack-item">Recharts</span>
-  </div>
+  <!-- ── HOW TO LOGIN ── -->
+  <section>
+    <div class="sec-label">🚪 איך נכנסים</div>
+    <div class="sec-title">כניסה ראשונה בארבעה צעדים</div>
+    <div class="sec-sub">אין צורך ברישום — הכניסה ישירה עם חשבון Google.</div>
+
+    <div class="login-steps">
+      <div class="login-step">
+        <div class="login-step-num">1</div>
+        <h4>קבלת קישור</h4>
+        <p>קיבלתם מייל עם קישור למערכת — כנסו לכתובת <strong>chabad-kaitanot.vercel.app</strong></p>
+      </div>
+      <div class="login-step">
+        <div class="login-step-num">2</div>
+        <h4>כניסה עם Google</h4>
+        <p>לחצו "כניסה עם Google" ובחרו את חשבון הגוגל שאיתו נרשמתם ברשת</p>
+      </div>
+      <div class="login-step">
+        <div class="login-step-num">3</div>
+        <h4>אישור אוטומטי</h4>
+        <p>המערכת מזהה את המייל שלכם ומעניקה את רמת ההרשאה המתאימה באופן אוטומטי</p>
+      </div>
+      <div class="login-step">
+        <div class="login-step-num">4</div>
+        <h4>התחילו לנהל</h4>
+        <p>אתם בלוח הבקרה — כל הכלים זמינים, עברית מלאה, מכל מחשב או נייד</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HIGHLIGHTS ── -->
+  <section>
+    <div class="highlights">
+      <div class="hl">
+        <span class="hl-icon">🇮🇱</span>
+        <div class="hl-text">עברית מלאה</div>
+        <div class="hl-sub">ממשק RTL מלא, כולל טפסים</div>
+      </div>
+      <div class="hl">
+        <span class="hl-icon">📱</span>
+        <div class="hl-text">מותאם לנייד</div>
+        <div class="hl-sub">עובד מכל מכשיר ודפדפן</div>
+      </div>
+      <div class="hl">
+        <span class="hl-icon">🔒</span>
+        <div class="hl-text">אבטחה מלאה</div>
+        <div class="hl-sub">הצפנה, RLS, הרשאות קפדניות</div>
+      </div>
+      <div class="hl">
+        <span class="hl-icon">⚡</span>
+        <div class="hl-text">מהיר ואמין</div>
+        <div class="hl-sub">Next.js + Vercel + Supabase</div>
+      </div>
+      <div class="hl">
+        <span class="hl-icon">📤</span>
+        <div class="hl-text">ייצוא בכל עת</div>
+        <div class="hl-sub">Excel ו-PDF מכל מודול</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section>
+    <div class="cta-bottom">
+      <h2>מוכנים להתחיל?</h2>
+      <p>הכל מוכן — נכנסים עם חשבון Google ומתחילים לנהל.<br/>שאלות? פנו לצוות הרשת.</p>
+      <a class="btn-cta" href="https://chabad-kaitanot.vercel.app/login">
+        🚀 כניסה למערכת
+      </a>
+    </div>
+  </section>
 
 </main>
 
-<footer>רשת אהלי יוסף יצחק ליובאוויטש · מערכת ניהול קייטנות</footer>
+<footer>
+  <div class="footer-logo">
+    <img src="public/logo-chabad.png" alt="חב&quot;ד" onerror="this.style.display='none'"/>
+  </div>
+  <p>רשת אהלי יוסף יצחק ליובאוויטש · מערכת ניהול קייטנות</p>
+  <p>פותח ייעודית לצרכי הרשת · כל הזכויות שמורות לרשת · תשפ"ו</p>
+</footer>
 
 </body>
 </html>
