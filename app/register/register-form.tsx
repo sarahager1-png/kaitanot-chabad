@@ -466,9 +466,8 @@ export function RegisterForm({ camps, allTracks, preselectedCampId }: Props) {
           </div>
         </div>
       </div>
-      <p className="mt-6 text-center text-[10px] text-[#B0B0C0]">
-        פיתוח ובניית אתר: שרה הגר 0503339770
-      </p>
+      <div className="mt-6 flex justify-center">
+      </div>
     </div>
   )
 }

@@ -264,8 +264,7 @@ export default function LandingPage() {
       {/* ══ FOOTER ══ */}
       <footer className="py-6 px-6 border-t border-white/[0.06] bg-[#0A0C15] text-center">
         <p className="text-[12px] text-white/25">
-          מערכת קייטנות חב&quot;ד · פיתוח: שרה הגר{' '}
-          <a href="tel:0503339770" className="text-white/30">0503339770</a>
+          מערכת קייטנות חב&quot;ד
         </p>
       </footer>
     </div>
